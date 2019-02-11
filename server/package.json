@@ -4,7 +4,8 @@
   "description": "Mini project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,14 @@
   "bugs": {
     "url": "https://github.com/viduni94/simple-pos/issues"
   },
-  "homepage": "https://github.com/viduni94/simple-pos#readme"
+  "homepage": "https://github.com/viduni94/simple-pos#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "mysql": "^2.16.0"
+  }
 }
