@@ -1,0 +1,19 @@
+{
+  "name": "simple-pos",
+  "version": "1.0.0",
+  "description": "Mini project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viduni94/simple-pos.git"
+  },
+  "author": "Viduni Wickramarachchi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viduni94/simple-pos/issues"
+  },
+  "homepage": "https://github.com/viduni94/simple-pos#readme"
+}
