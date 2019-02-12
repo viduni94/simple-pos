@@ -5,7 +5,7 @@ let express = require('express'),
 let bodyParser = require('body-parser');
 let path = require('path');
 let cors = require('cors');
-let db = require('./database');
+let db = require('./config/sequelize');
 
 //Body Parser Middleware
 app.use(bodyParser.json);
