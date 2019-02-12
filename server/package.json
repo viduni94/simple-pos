@@ -22,9 +22,12 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "http": "0.0.0",
+    "morgan": "^1.9.1",
     "mysql": "^2.16.0"
   }
 }

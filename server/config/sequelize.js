@@ -13,6 +13,4 @@ const db = new Sequelize('pos', 'root', 'adidas1653', {
     }
 });
 
-
-
 module.exports = db;
