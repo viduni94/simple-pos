@@ -1,17 +1,24 @@
-let express = require('express'),
+const express = require('express'),
     app = express(),
     port = process.env.PORT || 3000;
 
-let bodyParser = require('body-parser');
-let path = require('path');
-let cors = require('cors');
-let db = require('./config/sequelize');
+const bodyParser = require('body-parser');
+const path = require('path');
+const cors = require('cors');
+const sequelize = require('./config/sequelize');
+
+//Test DB
+sequelize.authenticate()
+    .then(() => {
+    console.log("Connected to the database successfully!");
+    })
+    .catch(err => {
+        console.error("Unable to connect to the database: ", err);
+    });
 
 //Body Parser Middleware
 app.use(bodyParser.json);
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.listen(port);
-
-console.log('Simple POS RESTful API server started on ' + port);
+app.listen(port, console.log('Simple POS server started on ' + port));
 
