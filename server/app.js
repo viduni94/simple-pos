@@ -11,6 +11,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const router = require('./src/routes');
 
+//Body Parser Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
 app.use('/', router);
 
 //Restrict use of cors
@@ -53,6 +57,11 @@ let sessionChecker = (req, res, next) => {
     }
 };
 
+app.get('/', sessionChecker, (req, res) => {
+    res.redirect('/login');
+    console.log('Redirected to login');
+});
+
 //Test DB
 db.authenticate()
     .then(() => {
@@ -62,11 +71,4 @@ db.authenticate()
         console.error("Unable to connect to the database: ", err);
     });
 
-//Body Parser Middleware
-app.use(bodyParser.json);
-app.use(bodyParser.urlencoded({extended: true}));
-
 app.listen(port, console.log('Simple POS server started on ' + port));
-
-module.exports = sessionChecker;
-

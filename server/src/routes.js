@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const sessionChecker = require('../app');
 
-//Main page route
-router.get('/', sessionChecker, (req, res) => {
-    res.redirect('/login');
-});
+//Controller files
+const loginController = require('./controllers/loginController');
+const userController = require('./controllers/userController');
+
+//Create new user route
+router.post('/user', userController.createUser);
+
+//Validate user route
+router.post('/login', loginController.validateUser);
 
 module.exports = router;

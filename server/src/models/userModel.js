@@ -1,4 +1,4 @@
-const sequelize = require('./config/sequelize');
+const sequelize = require('../../config/sequelize');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -6,7 +6,9 @@ let User = sequelize.define('users', {
     id: {
         type: Sequelize.INTEGER,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
     },
     fname: {
         type: Sequelize.STRING,
@@ -28,12 +30,12 @@ let User = sequelize.define('users', {
 }, {
     hooks: {
         beforeCreate: (user) => {
-            const salt = bcrypt.getSaltSync();
+            const salt = bcrypt.genSaltSync();
             user.password = bcrypt.hashSync(user.password, salt);
         }
     },
     instanceMethods: {
-        validPassword: function(password) {
+        validPassword: function (password) {
             return bcrypt.compareSync(password, this.password);
         }
     }
