@@ -31,7 +31,7 @@ app.use(cookieParser());
 //To track logged in users across sessions
 app.use(session({
     key: 'user_id',
-    secret: 'thisisAsecret',
+    secret: '123',
     resave: false,
     saveUninitialized: false,
     cookie: {
