@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const session = require('express-session');
 
 exports.createUser = (req,res) => {
     User.create({
@@ -8,14 +7,14 @@ exports.createUser = (req,res) => {
         fname: req.body.fname,
         lname: req.body.lname
     })
-        .then(user => {
-            req.session.user = user.dataValues;
-            res.json(user);
-            console.log('Successful! ', user);
-        })
-        .catch(error => {
-            if (!error.statusCode)
-                error.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
-            res.status(error.statusCode).send(error.message)
-        })
+        .then(user => res.status(201).json({
+            error: false,
+            data: user,
+            message: 'New user has been created.'
+        }))
+        .catch(err => res.json({
+            error: true,
+            data: [],
+            error: err
+        }));
 };
