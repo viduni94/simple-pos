@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client"
   },
   "repository": {
     "type": "git",
@@ -24,10 +25,11 @@
   "dependencies": {
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "http": "0.0.0",
-    "morgan": "^1.9.1",
+    "morgan": "ls^1.9.1",
     "mysql": "^2.16.0"
   }
 }

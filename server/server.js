@@ -19,7 +19,7 @@ app.use('/', router);
 
 //Restrict use of cors
 app.use(cors({
-    origin: 'http://localhost:5000'
+    origin: 'http://localhost:3001'
 }));
 
 //To log info about requests for development use
