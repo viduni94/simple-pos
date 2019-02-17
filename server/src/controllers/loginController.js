@@ -1,21 +1,35 @@
 const User = require("../models/UserModel");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const keys = require("../../config/keys");
 
 exports.validateUser = (req, res) => {
-  let username = req.body.username;
-  let password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
 
-  User.findOne({
-    where: { username: username }
-  }).then(user => {
+  //Find the user by email
+  User.findOne({ email }).then(user => {
+    //Check for user
     if (!user) {
-      res.redirect("/login");
-      console.log("User not found");
-    } else if (!user.validPassword(password)) {
-      res.redirect("/login");
-      console.log("Invalid password");
-    } else {
-      req.session.user = user.dataValues;
-      res.redirect("/dashboard");
+      return res.status(404).json({ email: "User not found" });
     }
+
+    //Check password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        //User matched
+        const payload = { id: user.id, fname: user.fname, email: user.email }; //Create jwt payload
+
+        //Sign token - Token expires in 24 hours
+        jwt.sign(payload, keys.secret, { expiresIn: 86400 }, (err, token) => {
+          res.json({
+            success: true,
+            token: "Bearer " + token
+          });
+        });
+      } else {
+        return res.status(400).json({ password: "Password incorrect" });
+      }
+    });
   });
 };

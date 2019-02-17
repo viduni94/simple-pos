@@ -26,3 +26,11 @@ exports.createUser = (req, res) => {
     }
   });
 };
+
+exports.getCurrentUser = (req, res) => {
+  res.json({
+    id: req.user.id,
+    name: req.user.fname + " " + req.user.lname,
+    email: req.user.email
+  });
+};
