@@ -9,7 +9,7 @@ const userController = require("./controllers/userController");
 router.get("/", (req, res) => res.send("Simple POS"));
 
 // @route POST /user
-// @desc Creates a new user
+// @desc Register a new user
 router.post("/user", userController.createUser);
 
 // @route POST /login
