@@ -25,6 +25,8 @@ const db = require("./config/keys").mongoURI;
 
 //Connect to mongoDB
 mongoose
-  .connect(db)
+  .connect(db, { useNewUrlParser: true, useCreateIndex: true })
   .then(() => console.log("MongoDB connected!"))
   .catch(err => console.log(err));
+
+app.listen(port, console.log("Simple POS server started on " + port));
