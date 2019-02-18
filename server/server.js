@@ -1,6 +1,6 @@
 const express = require("express"),
   app = express(),
-  port = process.env.PORT || 3000;
+  port = process.env.PORT || 5000;
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -17,7 +17,7 @@ app.use("/", router);
 //Restrict use of cors
 app.use(
   cors({
-    origin: "http://localhost:3001"
+    origin: "http://localhost:3000"
   })
 );
 
