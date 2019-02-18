@@ -1,6 +1,7 @@
 const User = require("../models/UserModel");
 const bcrypt = require("bcryptjs");
 const validateRegisterInput = require("../validations/registerValidation");
+const mongoose = require("mongoose");
 
 exports.createUser = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -36,7 +37,7 @@ exports.createUser = (req, res) => {
   });
 };
 
-exports.getCurrentUser = (req, res) => {
+exports.getUserProfile = (req, res) => {
   res.json({
     id: req.user.id,
     name: req.user.fname + " " + req.user.lname,

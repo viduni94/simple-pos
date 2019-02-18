@@ -5,6 +5,10 @@ const MenuSchema = new Schema({
   name: {
     type: String,
     required: true
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now
   }
 });
 

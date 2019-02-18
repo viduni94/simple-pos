@@ -11,6 +11,10 @@ const OrderItemSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "FoodItem",
     required: true
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now
   }
 });
 

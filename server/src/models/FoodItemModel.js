@@ -16,6 +16,10 @@ const FoodItemSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Menu",
     required: true
+  },
+  createdDate: {
+    type: Date,
+    default: Date.now
   }
 });
 

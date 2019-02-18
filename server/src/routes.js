@@ -17,12 +17,12 @@ router.post("/user", userController.createUser);
 // @desc Validate a user and login to the system / Returns JWT token
 router.post("/login", loginController.validateUser);
 
-// @route GET /currentUser
+// @route GET /profile
 // @desc Get current user
 router.get(
-  "/currentUser",
+  "/profile",
   passport.authenticate("jwt", { session: false }),
-  userController.getCurrentUser
+  userController.getUserProfile
 );
 
 module.exports = router;
