@@ -2,22 +2,22 @@ img {
   width: 100%;
 }
 
-.landing {
+.login {
   position: relative;
   background: url("./img/background.jpg") no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: 95.2vh;
   margin-top: -24px;
   margin-bottom: -50px;
 }
 
-.landing-inner {
+.login-inner {
   padding-top: 80px;
 }
 
 .dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(11, 195, 228, 0.877);
   position: absolute;
   top: 0;
   left: 0;
@@ -36,4 +36,10 @@ img {
 
 .form-control::placeholder {
   color: #bbb !important;
+}
+
+.btn-submit {
+  background-color: darkblue;
+  color: white;
+  font-weight: bold;
 }
