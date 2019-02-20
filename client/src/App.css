@@ -49,3 +49,15 @@ img {
   color: white;
   font-weight: bold;
 }
+
+.btn-logout {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-logout:hover {
+  background-color: transparent;
+  color: grey;
+  font-weight: bold;
+}
