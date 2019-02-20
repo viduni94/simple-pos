@@ -43,3 +43,9 @@ img {
   color: white;
   font-weight: bold;
 }
+
+.btn-submit:hover {
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-weight: bold;
+}

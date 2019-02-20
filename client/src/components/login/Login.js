@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Logo from "../../img/logo.png";
+import axios from "axios";
+import classnames from "classnames";
 
 class Login extends Component {
   constructor() {
@@ -23,10 +25,14 @@ class Login extends Component {
       password: this.state.password
     };
 
-    console.log(user);
+    axios
+      .post("/login", user)
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({ errors: err.response.data }));
   };
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="login">
         <div className="dark-overlay login-inner text-light">
@@ -37,12 +43,14 @@ class Login extends Component {
                 <div className="login-form">
                   <div className="row">
                     <div className="col-md-6 m-auto">
-                      <form onSubmit={this.onSubmit}>
+                      <form noValidate onSubmit={this.onSubmit}>
                         <div className="form-group">
-                          <input type="email" className="form-control form-control-lg" placeholder="Email Address" name="email" value={this.state.email} onChange={this.onChange} />
+                          <input type="email" placeholder="Email Address" name="email" value={this.state.email} onChange={this.onChange} className={classnames("form-control form-control-lg", { "is-invalid": errors.email })} />
+                          {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                         </div>
                         <div className="form-group">
-                          <input type="password" className="form-control form-control-lg" placeholder="Password" name="password" value={this.state.password} onChange={this.onChange} />
+                          <input type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.onChange} className={classnames("form-control form-control-lg", { "is-invalid": errors.password })} />
+                          {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                         </div>
                         <button type="submit" className="btn btn-submit btn-block mt-4">
                           Login
