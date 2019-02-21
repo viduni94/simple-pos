@@ -1,7 +1,6 @@
 const User = require("../models/UserModel");
 const bcrypt = require("bcryptjs");
 const validateRegisterInput = require("../validations/registerValidation");
-const mongoose = require("mongoose");
 
 exports.createUser = (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
