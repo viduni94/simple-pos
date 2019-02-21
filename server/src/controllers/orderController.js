@@ -21,3 +21,13 @@ exports.createOrder = (req, res) => {
     .then(order => res.json(order))
     .catch(err => console.log(err));
 };
+
+exports.getAllOpenOrders = (req, res) => {
+  Order.find({ status: true }, (err, orders) => {
+    if (!err) {
+      res.json(orders);
+    } else {
+      console.log(err);
+    }
+  });
+};

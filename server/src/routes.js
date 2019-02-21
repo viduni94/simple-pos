@@ -25,7 +25,7 @@ router.get("/profile", passport.authenticate("jwt", { session: false }), userCon
 
 // @route GET /order
 // @desc Get all open orders
-// router.get("/order", passport.authenticate("jwt", { session: false }), dashboardController.getAllOpenOrders);
+router.get("/order", passport.authenticate("jwt", { session: false }), orderController.getAllOpenOrders);
 
 // @route POST /order
 // @desc Create an order
