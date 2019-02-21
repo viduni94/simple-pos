@@ -8,6 +8,10 @@ module.exports = function validateOrderInput(data) {
   data.orderDate = !isEmpty(data.orderDate) ? data.orderDate : "";
   data.itemCount = !isEmpty(data.itemCount) ? data.itemCount : "";
 
+  if (isEmpty(data.orderItems)) {
+    errors.orderItems = "There should be at least one item for an order.";
+  }
+
   if (!mongoose.Types.ObjectId.isValid(data.userId)) {
     errors.userId = "Invalid user ID";
   }

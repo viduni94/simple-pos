@@ -8,6 +8,7 @@ const userController = require("./controllers/userController");
 const orderController = require("./controllers/orderController");
 const customerController = require("./controllers/customerController");
 const menuController = require("./controllers/menuController");
+const foodItemController = require("./controllers/foodItemController");
 
 //Main route
 router.get("/", (req, res) => res.send("Simple POS"));
@@ -32,13 +33,13 @@ router.get("/order", passport.authenticate("jwt", { session: false }), orderCont
 // @desc Create an order
 router.post("/order", passport.authenticate("jwt", { session: false }), orderController.createOrder);
 
-// @route POST /orderItem
-// @desc Create an order item
-// router.post("/orderItem", passport.authenticate("jwt", { session: false }), orderItemController.createOrderItem);
+// @route POST /foodItem
+// @desc Create a food item
+router.post("/foodItem", passport.authenticate("jwt", { session: false }), foodItemController.createFoodItem);
 
-// @route PUT /order/:id
-// @desc Create an order
-// router.put("/order", passport.authenticate("jwt", { session: false }), dashboardController.editOrder);
+// @route GET /foodItem
+// @desc Create all food items
+router.get("/foodItem", passport.authenticate("jwt", { session: false }), foodItemController.getFoodItems);
 
 // @route POST /customer
 // @desc Create a customer

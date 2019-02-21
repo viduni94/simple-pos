@@ -13,12 +13,16 @@ exports.createOrder = (req, res) => {
     orderDate: req.body.orderDate,
     itemCount: req.body.itemCount,
     userId: req.body.userId,
-    customerId: req.body.customerId
+    customerId: req.body.customerId,
+    orderItems: req.body.orderItems
   });
 
   newOrder
     .save()
-    .then(order => res.json(order))
+    .then(order => {
+      res.json(order);
+      console.log(order.id);
+    })
     .catch(err => console.log(err));
 };
 
