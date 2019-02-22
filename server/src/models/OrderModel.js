@@ -28,9 +28,15 @@ const OrderSchema = new Schema({
   },
   orderItems: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "FoodItem",
-      required: true
+      foodItem: {
+        type: Schema.Types.ObjectId,
+        ref: "FoodItem",
+        required: true
+      },
+      itemCount: {
+        type: Number,
+        default: 1
+      }
     }
   ],
   createdDate: {

@@ -33,6 +33,10 @@ router.get("/order", passport.authenticate("jwt", { session: false }), orderCont
 // @desc Create an order
 router.post("/order", passport.authenticate("jwt", { session: false }), orderController.createOrder);
 
+// @route POST /order/orderItem/:id
+// @desc Add an order item to an order
+router.post("/order/orderItem/:id", passport.authenticate("jwt", { session: false }), orderController.addOrderItem);
+
 // @route POST /foodItem
 // @desc Create a food item
 router.post("/foodItem", passport.authenticate("jwt", { session: false }), foodItemController.createFoodItem);

@@ -1,5 +1,6 @@
 const Order = require("../models/OrderModel");
 const validateOrderInput = require("../validations/orderValidation");
+const validateOrderItemInput = require("../validations/orderItemValidation");
 
 exports.createOrder = (req, res) => {
   const { errors, isValid } = validateOrderInput(req.body);
@@ -35,3 +36,44 @@ exports.getAllOpenOrders = (req, res) => {
     }
   });
 };
+
+// exports.updateOrder = (req, res) => {
+//   Order.findByIdAndUpdate(req.params.id, { orderItems: req.body.orderItems }, { new: true }, (err, updatedOrder) => {
+//     if (!err) {
+//       res.json(updatedOrder);
+//     } else {
+//       console.log(err);
+//     }
+//   });
+// };
+
+exports.addOrderItem = (req, res) => {
+  const { errors, isValid } = validateOrderItemInput(req.body);
+
+  //Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  Order.findOne({ _id: req.params.id }).then(order => {
+    const newOrderItem = {
+      foodItem: req.body.foodItem,
+      itemCount: req.body.itemCount
+    };
+
+    //Add to orderItem array
+    order.orderItems.unshift(newOrderItem);
+
+    order.save().then(order => res.json(order));
+  });
+};
+
+// exports.removeOrderItem = (req, res) => {
+//   Order.findByIdAndUpdate({ _id: req.params.id }, { $pull: { orderItems: req.body.orderItems } }, { new: true }, (err, updatedOrder) => {
+//     if (!err) {
+//       res.json(updatedOrder);
+//     } else {
+//       console.log(err);
+//     }
+//   });
+// };
