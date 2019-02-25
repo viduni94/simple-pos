@@ -70,7 +70,7 @@ class Login extends Component {
                           <input type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.onChange} className={classnames("form-control form-control-lg", { "is-invalid": errors.password })} />
                           {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                         </div>
-                        <button type="submit" className="btn btn-submit btn-block mt-4">
+                        <button type="submit" className="btn btn-login btn-block mt-4">
                           Login
                         </button>
                       </form>

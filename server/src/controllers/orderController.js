@@ -56,6 +56,14 @@ exports.addOrderItem = (req, res) => {
   }
 
   Order.findOne({ _id: req.params.id }).then(order => {
+    // TODO: if a fooditem exists, increase count
+
+    // order.orderItems.forEach(function(orderItem) {
+    //   if (orderItem.map(item => item.foodItem).indexOf(req.body.foodItem)) {
+    //     orderItem.itemCount = orderItem.itemCount + 1;
+    //   }
+    // });
+
     const newOrderItem = {
       foodItem: req.body.foodItem,
       itemCount: req.body.itemCount
@@ -68,12 +76,19 @@ exports.addOrderItem = (req, res) => {
   });
 };
 
-// exports.removeOrderItem = (req, res) => {
-//   Order.findByIdAndUpdate({ _id: req.params.id }, { $pull: { orderItems: req.body.orderItems } }, { new: true }, (err, updatedOrder) => {
-//     if (!err) {
-//       res.json(updatedOrder);
-//     } else {
-//       console.log(err);
-//     }
-//   });
-// };
+exports.deleteOrderItem = (req, res) => {
+  //TODO: Delete only if item count is equal to 1, if not, decrease item count
+
+  Order.findOne({ _id: req.params.id })
+    .then(order => {
+      //Get remove index
+      const removeIndex = order.orderItems.map(item => item.id).indexOf(req.params.orderItemId);
+
+      //Splice out of the array
+      order.orderItems.splice(removeIndex, 1);
+
+      // save
+      order.save().then(profile => res.json(order));
+    })
+    .catch(err => res.status(404).json(err));
+};

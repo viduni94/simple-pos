@@ -1,13 +1,18 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
+import PrivateRoute from "./components/common/PrivateRoute";
+
 import Footer from "./components/layout/Footer";
+import Navbar from "./components/layout/Navbar";
 import Login from "./components/login/Login";
+import Dashboard from "./components/dashboard/Dashboard";
+import CreateOrder from "./components/order/CreateOrder";
 import "./App.css";
 
 //Check for token
@@ -35,7 +40,14 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
+            <Navbar />
             <Route exact path="/login" component={Login} />
+            <Switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/create-order" component={CreateOrder} />
+            </Switch>
             <Footer />
           </div>
         </Router>

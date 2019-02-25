@@ -24,16 +24,14 @@ class Navbar extends Component {
 
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-        <div className="container">
-          <Link className="navbar-brand" to="/">
-            SimplePOS
-          </Link>
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="mobile-nav">
-            {isAuthenticated ? authLinks : null}
-          </div>
+        <Link className="navbar-brand" to="/">
+          SimplePOS
+        </Link>
+        <button style={isAuthenticated ? null : { display: "none" }} className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="mobile-nav">
+          {isAuthenticated ? authLinks : null}
         </div>
       </nav>
     );

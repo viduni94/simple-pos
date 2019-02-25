@@ -37,6 +37,10 @@ router.post("/order", passport.authenticate("jwt", { session: false }), orderCon
 // @desc Add an order item to an order
 router.post("/order/orderItem/:id", passport.authenticate("jwt", { session: false }), orderController.addOrderItem);
 
+// @route DELETE /order/orderItem/:id
+// @desc Remove an order item from an order
+router.delete("/order/orderItem/:id/:orderItemId", passport.authenticate("jwt", { session: false }), orderController.deleteOrderItem);
+
 // @route POST /foodItem
 // @desc Create a food item
 router.post("/foodItem", passport.authenticate("jwt", { session: false }), foodItemController.createFoodItem);
