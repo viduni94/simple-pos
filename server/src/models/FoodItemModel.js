@@ -17,6 +17,10 @@ const FoodItemSchema = new Schema({
     ref: "Menu",
     required: true
   },
+  category: {
+    type: String,
+    required: true
+  },
   createdDate: {
     type: Date,
     default: Date.now

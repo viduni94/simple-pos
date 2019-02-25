@@ -219,7 +219,6 @@ img {
   /* display: inline; */
   float: left;
   width: 100%;
-  margin-bottom: 5px;
   text-align: center;
 }
 .mu-title .mu-subtitle {
@@ -233,6 +232,14 @@ img {
   margin-bottom: 5px;
 }
 
+.custom-title {
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 25px;
+  margin-top: 15px;
+}
+
 /* Order create CSS */
 .create-profile {
   height: 78.9vh;
@@ -241,4 +248,9 @@ img {
 
 .custom-row {
   margin-right: 0px !important;
+}
+
+.dashboard {
+  height: 78.9vh;
+  position: relative;
 }

@@ -43,15 +43,13 @@ class Menu extends Component {
                                 <li>
                                   <div className="media">
                                     <div className="media-left">
-                                      <a href=" ">
-                                        <img className="media-object" src="assets/img/menu/item-1.jpg" alt="img" />
-                                      </a>
+                                      <img className="media-object" src={"../../img/menu/" + this.props.image} alt="img" />
                                     </div>
                                     <div className="media-body">
                                       <h4 className="media-heading">
-                                        <a href=" ">English Breakfast</a>
+                                        <a href=" ">Coke</a>
                                       </h4>
-                                      <span className="mu-menu-price">$15.85</span>
+                                      <span className="mu-menu-price">15.85 LKR</span>
                                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere nulla aliquid praesentium dolorem commodi illo.</p>
                                     </div>
                                   </div>
