@@ -68,7 +68,7 @@ export class CreateOrder extends Component {
                 <small className="form-text text-muted">Give us an idea of where you are at in your career</small>
               </div> */}
               <div className="form-group">
-                <table class="table">
+                <table className="table">
                   <thead className="thead-light">
                     <tr>
                       <th scope="col">#</th>

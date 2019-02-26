@@ -46,7 +46,7 @@ router.delete("/order/orderItem/:id/:orderItemId", passport.authenticate("jwt", 
 router.post("/foodItem", passport.authenticate("jwt", { session: false }), foodItemController.createFoodItem);
 
 // @route GET /foodItem
-// @desc Create all food items
+// @desc Get all food items
 router.get("/foodItem", passport.authenticate("jwt", { session: false }), foodItemController.getFoodItems);
 
 // @route POST /customer

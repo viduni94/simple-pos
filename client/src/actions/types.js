@@ -4,3 +4,4 @@ export const GET_ORDERLIST = "GET_ORDERLIST";
 export const ORDERLIST_LOADING = "ORDERLIST_LOADING";
 export const GET_ORDER = "GET_ORDER";
 export const ORDER_NOT_FOUND = "ORDER_NOT_FOUND";
+export const GET_FOODITEMS = "GET_FOODITEMS";

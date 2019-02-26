@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", router);
 
+app.use(express.static("public"));
+
 //Restrict use of cors
 app.use(
   cors({

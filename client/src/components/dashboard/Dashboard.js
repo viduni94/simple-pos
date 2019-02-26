@@ -86,7 +86,7 @@ class Dashboard extends Component {
           <div>
             <p className="lead text-muted">Welcome {user.fname}</p>
             <p>You don't have any open orders yet</p>
-            <Link to="/order" className="btn btn-lg btn-info">
+            <Link to="/create-order" className="btn btn-lg btn-info">
               Create Order
             </Link>
           </div>

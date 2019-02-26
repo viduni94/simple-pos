@@ -12,7 +12,8 @@ exports.createFoodItem = (req, res) => {
   const newFoodItem = new FoodItem({
     name: req.body.name,
     unitPrice: req.body.unitPrice,
-    menuId: req.body.menuId
+    menuId: req.body.menuId,
+    category: req.body.category
   });
 
   newFoodItem
