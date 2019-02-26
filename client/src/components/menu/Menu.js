@@ -54,6 +54,9 @@ class Menu extends Component {
                   </h4>
                   <span className="mu-menu-price">{(bev.unitPrice / 100).toFixed(2)} LKR</span>
                   <p>{bev.menuId}</p>
+                  <p>
+                    <button className="btn btn-normal btn-sm">Add Item</button>
+                  </p>
                 </div>
               </div>
             </li>
@@ -75,6 +78,9 @@ class Menu extends Component {
                   </h4>
                   <span className="mu-menu-price">{(app.unitPrice / 100).toFixed(2)} LKR</span>
                   <p>{app.menuId}</p>
+                  <p>
+                    <button className="btn btn-normal btn-sm">Add Item</button>
+                  </p>
                 </div>
               </div>
             </li>
@@ -96,6 +102,9 @@ class Menu extends Component {
                   </h4>
                   <span className="mu-menu-price">{(main.unitPrice / 100).toFixed(2)} LKR</span>
                   <p>{main.menuId}</p>
+                  <p>
+                    <button className="btn btn-normal btn-sm">Add Item</button>
+                  </p>
                 </div>
               </div>
             </li>
@@ -117,6 +126,9 @@ class Menu extends Component {
                   </h4>
                   <span className="mu-menu-price">{(des.unitPrice / 100).toFixed(2)} LKR</span>
                   <p>{des.menuId}</p>
+                  <p>
+                    <button className="btn btn-normal btn-sm">Add Item</button>
+                  </p>
                 </div>
               </div>
             </li>

@@ -153,8 +153,8 @@ img {
   margin-bottom: 0;
 }
 #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left {
-  width: 110px;
-  height: 110px;
+  width: 130px;
+  height: 130px;
 }
 #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-left a img {
   width: 110px;
@@ -162,7 +162,7 @@ img {
 }
 #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-body .media-heading {
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-left: 20px;
 }
 #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-body .media-heading a {
@@ -172,6 +172,7 @@ img {
   -o-transition: all 0.5s;
   transition: all 0.5s;
 }
+
 #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-body .mu-menu-price {
   font-size: 16px;
   font-weight: bold;
@@ -180,7 +181,7 @@ img {
   margin-left: 20px;
 }
 #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-body p {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 14px;
   margin-left: 20px;
 }
@@ -209,7 +210,7 @@ img {
   color: #3498db;
 }
 #mu-restaurant-menu .mu-restaurant-menu-area .mu-restaurant-menu-content .mu-tab-content-area .mu-menu-item-nav li .media .media-body .mu-menu-price {
-  color: #3498db;
+  color: #86898b;
 }
 
 .mu-title {

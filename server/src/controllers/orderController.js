@@ -28,13 +28,16 @@ exports.createOrder = (req, res) => {
 };
 
 exports.getAllOpenOrders = (req, res) => {
-  Order.find({ status: true }, (err, orders) => {
-    if (!err) {
-      res.json(orders);
-    } else {
-      console.log(err);
-    }
-  });
+  Order.find({ status: true })
+    .populate("customer")
+    .exec((err, orders) => {
+      console.log(orders);
+      if (!err) {
+        res.json(orders);
+      } else {
+        console.log(err);
+      }
+    });
 };
 
 // exports.updateOrder = (req, res) => {

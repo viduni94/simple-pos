@@ -6,6 +6,13 @@ import Spinner from "../common/spinner";
 import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentUserOrders: []
+    };
+  }
   componentDidMount() {
     this.props.getOpenOrderList();
   }
@@ -20,66 +27,30 @@ class Dashboard extends Component {
       dashboardContent = <Spinner />;
     } else {
       if (Object.keys(orderLists).length > 0) {
-        dashboardContent = (
-          <div className="row">
-            <div className="col-md-3 m-auto">
-              <div className="card mt-2" style={{ width: 250 }}>
-                <div className="card-header">Customer: ABC</div>
-                <div className="card-body">
-                  <p className="card-text">Order Number: #001</p>
-                  <p className="card-text">Total amount: 5,000 LKR</p>
-                </div>
-                <div className="card-footer text-center">
-                  <a href=" " className="card-link">
-                    View Order Details
-                  </a>
-                </div>
+        orderLists.forEach(order => {
+          if (!order.userId.localeCompare(user.id)) {
+            this.state.currentUserOrders.push(order);
+          }
+        });
+
+        dashboardContent = this.state.currentUserOrders.map(order => (
+          <div className="col-md-3 m-auto" key={order._id} style={{ width: 250, height: 200 }}>
+            <div className="card mt-2">
+              <div className="card-header">
+                Customer: {order.customer.fname} {order.customer.lname}
               </div>
-            </div>
-            <div className="col-md-3 m-auto">
-              <div className="card mt-2" style={{ width: 250 }}>
-                <div className="card-header">Customer: ABC</div>
-                <div className="card-body">
-                  <p className="card-text">Order Number: #001</p>
-                  <p className="card-text">Total amount: 5,000 LKR</p>
-                </div>
-                <div className="card-footer text-center">
-                  <a href=" " className="card-link">
-                    View Order Details
-                  </a>
-                </div>
+              <div className="card-body">
+                <p className="card-text">Order Number: {order._id}</p>
+                <p className="card-text">Total amount: --</p>
               </div>
-            </div>
-            <div className="col-md-3 m-auto">
-              <div className="card mt-2" style={{ width: 250 }}>
-                <div className="card-header">Customer: ABC</div>
-                <div className="card-body">
-                  <p className="card-text">Order Number: #001</p>
-                  <p className="card-text">Total amount: 5,000 LKR</p>
-                </div>
-                <div className="card-footer text-center">
-                  <a href=" " className="card-link">
-                    View Order Details
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3 m-auto">
-              <div className="card mt-2" style={{ width: 250 }}>
-                <div className="card-header">Customer: ABC</div>
-                <div className="card-body">
-                  <p className="card-text">Order Number: #001</p>
-                  <p className="card-text">Total amount: 5,000 LKR</p>
-                </div>
-                <div className="card-footer text-center">
-                  <a href=" " className="card-link">
-                    View Order Details
-                  </a>
-                </div>
+              <div className="card-footer text-center">
+                <a href=" " className="card-link">
+                  View Order Details
+                </a>
               </div>
             </div>
           </div>
-        );
+        ));
       } else {
         //User is logged in but no orders yet
         dashboardContent = (
@@ -93,6 +64,7 @@ class Dashboard extends Component {
         );
       }
     }
+    console.log(this.state.currentUserOrders);
 
     return (
       <div className="dashboard">
