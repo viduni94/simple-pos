@@ -7,13 +7,14 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import PrivateRoute from "./components/common/PrivateRoute";
+import "./App.css";
 
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
 import Login from "./components/login/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateOrder from "./components/order/CreateOrder";
-import "./App.css";
+import OrderDetails from "./components/order/OrderDetails";
 
 //Check for token
 if (localStorage.jwtToken) {
@@ -47,6 +48,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <PrivateRoute exact path="/create-order" component={CreateOrder} />
+            </Switch>
+            <Switch>
+              <PrivateRoute exact path="/order-details/:id" component={OrderDetails} />
             </Switch>
             <Footer />
           </div>

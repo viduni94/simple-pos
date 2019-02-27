@@ -15,9 +15,9 @@ const CustomerSchema = new Schema({
     unique: true,
     required: true
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users",
     required: true
   },
   createdDate: {

@@ -8,11 +8,8 @@ import { Link } from "react-router-dom";
 class Dashboard extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      currentUserOrders: []
-    };
   }
+
   componentDidMount() {
     this.props.getOpenOrderList();
   }
@@ -24,33 +21,33 @@ class Dashboard extends Component {
     let dashboardContent;
 
     if (orderLists === null || loading) {
-      dashboardContent = <Spinner />;
+      dashboardContent = (
+        <div className="m-auto">
+          <Spinner />
+        </div>
+      );
     } else {
       if (Object.keys(orderLists).length > 0) {
-        orderLists.forEach(order => {
-          if (!order.userId.localeCompare(user.id)) {
-            this.state.currentUserOrders.push(order);
-          }
-        });
-
-        dashboardContent = this.state.currentUserOrders.map(order => (
-          <div className="col-md-3 m-auto" key={order._id} style={{ width: 250, height: 200 }}>
-            <div className="card mt-2">
-              <div className="card-header">
-                Customer: {order.customer.fname} {order.customer.lname}
-              </div>
-              <div className="card-body">
-                <p className="card-text">Order Number: {order._id}</p>
-                <p className="card-text">Total amount: --</p>
-              </div>
-              <div className="card-footer text-center">
-                <a href=" " className="card-link">
-                  View Order Details
-                </a>
+        dashboardContent = orderLists
+          .filter(order => !order.user.localeCompare(user.id))
+          .map(order => (
+            <div className="col-md-3 m-auto" key={order._id} style={{ width: 300, height: 270 }}>
+              <div className="card mt-2">
+                <div className="card-header">
+                  Customer: {order.customer.fname} {order.customer.lname}
+                </div>
+                <div className="card-body">
+                  <p className="card-text">Order Number: {order._id}</p>
+                  <p className="card-text">Total amount: --</p>
+                </div>
+                <div className="card-footer text-center">
+                  <Link to={"/order-details/" + order._id} className="card-link">
+                    View Order Details
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ));
+          ));
       } else {
         //User is logged in but no orders yet
         dashboardContent = (
@@ -64,21 +61,22 @@ class Dashboard extends Component {
         );
       }
     }
-    console.log(this.state.currentUserOrders);
 
     return (
-      <div className="dashboard">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <div className="row">
-                <h3 className="custom-title">- Open Orders of {user.fname} -</h3>
+      <>
+        <div className="dashboard">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="row">
+                  <h3 className="custom-title">- Open Orders of {user.fname} -</h3>
+                </div>
+                <div className="row">{dashboardContent}</div>
               </div>
-              <div className="row">{dashboardContent}</div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

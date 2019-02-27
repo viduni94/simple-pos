@@ -7,13 +7,6 @@ import Spinner from "../common/spinner";
 class Menu extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      beverages: [],
-      appetizers: [],
-      mains: [],
-      desserts: []
-    };
   }
 
   componentDidMount() {
@@ -28,113 +21,111 @@ class Menu extends Component {
     if (items === undefined) {
       menucontent = <Spinner />;
     } else {
-      items.forEach(item => {
-        if (item.category === "beverages") {
-          this.state.beverages.push(item);
-        } else if (item.category === "appetizers") {
-          this.state.appetizers.push(item);
-        } else if (item.category === "mains") {
-          this.state.mains.push(item);
-        } else if (item.category === "desserts") {
-          this.state.desserts.push(item);
-        }
-      });
+      console.log(items.category);
 
-      const beverage = this.state.beverages.map(bev => (
-        <div className="col-md-6" key={bev._id}>
-          <ul className="mu-menu-item-nav">
-            <li>
-              <div className="media">
-                <div className="media-left">
-                  <img className="media-object" src={`../../img/menu/${bev.name}.jpg`} alt="img" />
+      const beverage = items
+        .filter(item => !item.category.localeCompare("beverages"))
+        .map(bev => (
+          <div className="col-md-6" key={bev._id}>
+            <ul className="mu-menu-item-nav">
+              <li>
+                <div className="media">
+                  <div className="media-left">
+                    <img className="media-object" src={`../../img/menu/${bev.name}.jpg`} alt="img" />
+                  </div>
+                  <div className="media-body">
+                    <h4 className="media-heading">
+                      <span>{bev.name}</span>
+                    </h4>
+                    <span className="mu-menu-price">{(bev.unitPrice / 100).toFixed(2)} LKR</span>
+                    <p>{bev.menu}</p>
+                    <p>
+                      <button className="btn btn-normal btn-sm">Add Item</button>
+                    </p>
+                  </div>
                 </div>
-                <div className="media-body">
-                  <h4 className="media-heading">
-                    <span>{bev.name}</span>
-                  </h4>
-                  <span className="mu-menu-price">{(bev.unitPrice / 100).toFixed(2)} LKR</span>
-                  <p>{bev.menuId}</p>
-                  <p>
-                    <button className="btn btn-normal btn-sm">Add Item</button>
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      ));
+              </li>
+            </ul>
+          </div>
+        ));
 
-      const appetizer = this.state.appetizers.map(app => (
-        <div className="col-md-6" key={app._id}>
-          <ul className="mu-menu-item-nav">
-            <li>
-              <div className="media">
-                <div className="media-left">
-                  <img className="media-object" src={`../../img/menu/${app.name}.jpg`} alt="img" />
+      const appetizer = items
+        .filter(item => !item.category.localeCompare("appetizers"))
+        .map(app => (
+          <div className="col-md-6" key={app._id}>
+            <ul className="mu-menu-item-nav">
+              <li>
+                <div className="media">
+                  <div className="media-left">
+                    <img className="media-object" src={`../../img/menu/${app.name}.jpg`} alt="img" />
+                  </div>
+                  <div className="media-body">
+                    <h4 className="media-heading">
+                      <span>{app.name}</span>
+                    </h4>
+                    <span className="mu-menu-price">{(app.unitPrice / 100).toFixed(2)} LKR</span>
+                    <p>{app.menu}</p>
+                    <p>
+                      <button className="btn btn-normal btn-sm">Add Item</button>
+                    </p>
+                  </div>
                 </div>
-                <div className="media-body">
-                  <h4 className="media-heading">
-                    <span>{app.name}</span>
-                  </h4>
-                  <span className="mu-menu-price">{(app.unitPrice / 100).toFixed(2)} LKR</span>
-                  <p>{app.menuId}</p>
-                  <p>
-                    <button className="btn btn-normal btn-sm">Add Item</button>
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      ));
+              </li>
+            </ul>
+          </div>
+        ));
 
-      const main = this.state.mains.map(main => (
-        <div className="col-md-6" key={main._id}>
-          <ul className="mu-menu-item-nav">
-            <li>
-              <div className="media">
-                <div className="media-left">
-                  <img className="media-object" src={`../../img/menu/${main.name}.jpg`} alt="img" />
+      const main = items
+        .filter(item => !item.category.localeCompare("mains"))
+        .map(main => (
+          <div className="col-md-6" key={main._id}>
+            <ul className="mu-menu-item-nav">
+              <li>
+                <div className="media">
+                  <div className="media-left">
+                    <img className="media-object" src={`../../img/menu/${main.name}.jpg`} alt="img" />
+                  </div>
+                  <div className="media-body">
+                    <h4 className="media-heading">
+                      <span>{main.name}</span>
+                    </h4>
+                    <span className="mu-menu-price">{(main.unitPrice / 100).toFixed(2)} LKR</span>
+                    <p>{main.menu}</p>
+                    <p>
+                      <button className="btn btn-normal btn-sm">Add Item</button>
+                    </p>
+                  </div>
                 </div>
-                <div className="media-body">
-                  <h4 className="media-heading">
-                    <span>{main.name}</span>
-                  </h4>
-                  <span className="mu-menu-price">{(main.unitPrice / 100).toFixed(2)} LKR</span>
-                  <p>{main.menuId}</p>
-                  <p>
-                    <button className="btn btn-normal btn-sm">Add Item</button>
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      ));
+              </li>
+            </ul>
+          </div>
+        ));
 
-      const dessert = this.state.desserts.map(des => (
-        <div className="col-md-6" key={des._id}>
-          <ul className="mu-menu-item-nav">
-            <li>
-              <div className="media">
-                <div className="media-left">
-                  <img className="media-object" src={`../../img/menu/${des.name}.jpg`} alt="img" />
+      const dessert = items
+        .filter(item => !item.category.localeCompare("desserts"))
+        .map(des => (
+          <div className="col-md-6" key={des._id}>
+            <ul className="mu-menu-item-nav">
+              <li>
+                <div className="media">
+                  <div className="media-left">
+                    <img className="media-object" src={`../../img/menu/${des.name}.jpg`} alt="img" />
+                  </div>
+                  <div className="media-body">
+                    <h4 className="media-heading">
+                      <span>{des.name}</span>
+                    </h4>
+                    <span className="mu-menu-price">{(des.unitPrice / 100).toFixed(2)} LKR</span>
+                    <p>{des.menu}</p>
+                    <p>
+                      <button className="btn btn-normal btn-sm">Add Item</button>
+                    </p>
+                  </div>
                 </div>
-                <div className="media-body">
-                  <h4 className="media-heading">
-                    <span>{des.name}</span>
-                  </h4>
-                  <span className="mu-menu-price">{(des.unitPrice / 100).toFixed(2)} LKR</span>
-                  <p>{des.menuId}</p>
-                  <p>
-                    <button className="btn btn-normal btn-sm">Add Item</button>
-                  </p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      ));
+              </li>
+            </ul>
+          </div>
+        ));
 
       menucontent = (
         <div className="tab-content">

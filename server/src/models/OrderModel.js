@@ -16,9 +16,9 @@ const OrderSchema = new Schema({
     required: true,
     default: true
   },
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users",
     required: true
   },
   customer: {
@@ -30,7 +30,7 @@ const OrderSchema = new Schema({
     {
       foodItem: {
         type: Schema.Types.ObjectId,
-        ref: "FoodItem",
+        ref: "foodItem",
         required: true
       },
       itemCount: {

@@ -12,9 +12,9 @@ const FoodItemSchema = new Schema({
     get: getPrice,
     set: setPrice
   },
-  menuId: {
+  menu: {
     type: Schema.Types.ObjectId,
-    ref: "Menu",
+    ref: "menu",
     required: true
   },
   category: {

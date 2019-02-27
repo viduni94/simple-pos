@@ -31,7 +31,6 @@ exports.getAllOpenOrders = (req, res) => {
   Order.find({ status: true })
     .populate("customer")
     .exec((err, orders) => {
-      console.log(orders);
       if (!err) {
         res.json(orders);
       } else {
@@ -91,7 +90,7 @@ exports.deleteOrderItem = (req, res) => {
       order.orderItems.splice(removeIndex, 1);
 
       // save
-      order.save().then(profile => res.json(order));
+      order.save().then(order => res.json(order));
     })
     .catch(err => res.status(404).json(err));
 };
