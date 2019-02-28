@@ -3,6 +3,7 @@ import { getFoodItems } from "../../actions/itemActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/spinner";
+import FoodItem from "./FoodItem";
 
 class Menu extends Component {
   componentDidMount() {
@@ -17,115 +18,19 @@ class Menu extends Component {
     if (items === undefined) {
       menucontent = <Spinner />;
     } else {
-      const beverage = items
-        .filter(item => !item.category.localeCompare("beverages"))
-        .map(bev => (
-          <div className="col-md-6" key={bev._id}>
-            <ul className="mu-menu-item-nav">
-              <li>
-                <div className="media">
-                  <div className="media-left">
-                    <img className="media-object" src={`../../img/menu/${bev.name}.jpg`} alt="img" />
-                  </div>
-                  <div className="media-body">
-                    <h4 className="media-heading">
-                      <span>{bev.name}</span>
-                    </h4>
-                    <span className="mu-menu-price">{(bev.unitPrice / 100).toFixed(2)} LKR</span>
-                    <p>{bev.menu}</p>
-                    <p>
-                      <button className="btn btn-normal btn-sm">Add Item</button>
-                    </p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        ));
+      const beverage = items.filter(item => !item.category.localeCompare("beverages")).map(bev => <FoodItem key={bev._id} category={bev} />);
 
-      const appetizer = items
-        .filter(item => !item.category.localeCompare("appetizers"))
-        .map(app => (
-          <div className="col-md-6" key={app._id}>
-            <ul className="mu-menu-item-nav">
-              <li>
-                <div className="media">
-                  <div className="media-left">
-                    <img className="media-object" src={`../../img/menu/${app.name}.jpg`} alt="img" />
-                  </div>
-                  <div className="media-body">
-                    <h4 className="media-heading">
-                      <span>{app.name}</span>
-                    </h4>
-                    <span className="mu-menu-price">{(app.unitPrice / 100).toFixed(2)} LKR</span>
-                    <p>{app.menu}</p>
-                    <p>
-                      <button className="btn btn-normal btn-sm">Add Item</button>
-                    </p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        ));
+      const appetizer = items.filter(item => !item.category.localeCompare("appetizers")).map(app => <FoodItem key={app._id} category={app} />);
 
-      const main = items
-        .filter(item => !item.category.localeCompare("mains"))
-        .map(main => (
-          <div className="col-md-6" key={main._id}>
-            <ul className="mu-menu-item-nav">
-              <li>
-                <div className="media">
-                  <div className="media-left">
-                    <img className="media-object" src={`../../img/menu/${main.name}.jpg`} alt="img" />
-                  </div>
-                  <div className="media-body">
-                    <h4 className="media-heading">
-                      <span>{main.name}</span>
-                    </h4>
-                    <span className="mu-menu-price">{(main.unitPrice / 100).toFixed(2)} LKR</span>
-                    <p>{main.menu}</p>
-                    <p>
-                      <button className="btn btn-normal btn-sm">Add Item</button>
-                    </p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        ));
+      const main = items.filter(item => !item.category.localeCompare("mains")).map(main => <FoodItem key={main._id} category={main} />);
 
-      const dessert = items
-        .filter(item => !item.category.localeCompare("desserts"))
-        .map(des => (
-          <div className="col-md-6" key={des._id}>
-            <ul className="mu-menu-item-nav">
-              <li>
-                <div className="media">
-                  <div className="media-left">
-                    <img className="media-object" src={`../../img/menu/${des.name}.jpg`} alt="img" />
-                  </div>
-                  <div className="media-body">
-                    <h4 className="media-heading">
-                      <span>{des.name}</span>
-                    </h4>
-                    <span className="mu-menu-price">{(des.unitPrice / 100).toFixed(2)} LKR</span>
-                    <p>{des.menu}</p>
-                    <p>
-                      <button className="btn btn-normal btn-sm">Add Item</button>
-                    </p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        ));
+      const dessert = items.filter(item => !item.category.localeCompare("desserts")).map(des => <FoodItem key={des._id} category={des} />);
 
       menucontent = (
         <div className="tab-content">
           <div className="tab-pane fade show active" id="beverages">
             <div className="mu-tab-content-area">
-              <div className="row col-md-12">{beverage}</div>
+              <div className="row">{beverage}</div>
             </div>
           </div>
 

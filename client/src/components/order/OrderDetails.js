@@ -19,6 +19,8 @@ class OrderDetails extends Component {
   }
 
   render() {
+    const { orderLists, loading } = this.props.orderList;
+
     return (
       <div>
         <div className="create-order">

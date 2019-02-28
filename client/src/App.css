@@ -1,10 +1,9 @@
 /* For mobile phones: */
-[class*="col-"] {
+/* [class*="col-"] {
   width: 100%;
-}
+} */
 
-@media only screen and (min-width: 768px) {
-  /* For desktop: */
+/* @media only screen and (min-width: 768px) {
   .col-1 {
     width: 8.33%;
   }
@@ -41,7 +40,7 @@
   .col-12 {
     width: 100%;
   }
-}
+} */
 
 img {
   width: 100%;
