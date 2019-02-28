@@ -11,6 +11,20 @@ class Dashboard extends Component {
     this.props.resetActiveOrder();
   }
 
+  getTotalBillAmount = id => {
+    if (this.props.orderList.orderLists.length > 0) {
+      let singleOrder = this.props.orderList.orderLists.filter(order => {
+        return !order._id.localeCompare(id);
+      });
+      if (singleOrder.length > 0) {
+        return singleOrder[0].orderItems.reduce((acc, currValue) => {
+          return acc + currValue.foodItem.unitPrice;
+        }, 0);
+      }
+    }
+    return 0;
+  };
+
   render() {
     const { user } = this.props.auth;
     const { orderLists, loading } = this.props.orderList;
@@ -27,24 +41,28 @@ class Dashboard extends Component {
       if (Object.keys(orderLists).length > 0) {
         dashboardContent = orderLists
           .filter(order => !order.user.localeCompare(user.id))
-          .map(order => (
-            <div className="col-md-3 m-auto" key={order._id} style={{ width: 300, height: 270 }}>
-              <div className="card mt-2">
-                <div className="card-header">
-                  Customer: {order.customer.fname} {order.customer.lname}
-                </div>
-                <div className="card-body">
-                  <p className="card-text">Order Number: {order._id}</p>
-                  <p className="card-text">Total amount: --</p>
-                </div>
-                <div className="card-footer text-center">
-                  <Link to={"/order-details/" + order._id} className="card-link">
-                    View Order Details
-                  </Link>
+          .map(order => {
+            return (
+              <div className="col-md-3 m-auto" key={order._id} style={{ width: 300, height: 270 }}>
+                <div className="card mt-2">
+                  <div className="card-header">
+                    Customer: {order.customer.fname} {order.customer.lname}
+                  </div>
+                  <div className="card-body">
+                    <p className="card-text">Order Number: {order._id}</p>
+                    <p className="card-text">
+                      Total amount:<b> {(this.getTotalBillAmount(order._id) / 100).toFixed(2)}</b>
+                    </p>
+                  </div>
+                  <div className="card-footer text-center">
+                    <Link to={"/order-details/" + order._id} className="card-link">
+                      View Order Details
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ));
+            );
+          });
       } else {
         //User is logged in but no orders yet
         dashboardContent = (

@@ -43,7 +43,6 @@ class OrderDetails extends Component {
     } else {
       if (Object.keys(orderLists).length > 0) {
         activeOrderDetails = orderLists.filter(order => !order._id.localeCompare(activeOrder));
-        console.log(activeOrderDetails[0]);
         if (activeOrderDetails.length > 0) {
           activeOrderItems = activeOrderDetails[0].orderItems.map((item, index) => (
             <tr key={item._id}>
