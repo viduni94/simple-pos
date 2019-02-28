@@ -1,17 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getOpenOrderList } from "../../actions/orderListActions";
+import { getOpenOrderList, resetActiveOrder } from "../../actions/orderListActions";
 import Spinner from "../common/spinner";
 import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.getOpenOrderList();
+    this.props.resetActiveOrder();
   }
 
   render() {
@@ -83,7 +80,9 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   orderList: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  getOpenOrderList: PropTypes.func.isRequired,
+  resetActiveOrder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -93,5 +92,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getOpenOrderList }
+  { getOpenOrderList, resetActiveOrder }
 )(Dashboard);

@@ -284,7 +284,7 @@ img {
 
 /* Order create CSS */
 @media only screen and (min-width: 600px) {
-  .create-profile {
+  .create-order {
     height: 78.9vh;
     position: relative;
   }

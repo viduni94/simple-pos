@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS } from "./types";
+import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER } from "./types";
 
 //Get order list for current user
 export const getOpenOrderList = () => dispatch => {
@@ -27,4 +27,18 @@ export const setOrderListLoading = () => {
   return {
     type: ORDERLIST_LOADING
   };
+};
+
+// Set active order
+export const setActiveOrder = id => dispatch => {
+  dispatch({
+    type: SET_ACTIVE_ORDER,
+    payload: id
+  });
+};
+
+export const resetActiveOrder = () => dispatch => {
+  dispatch({
+    type: RESET_ACTIVE_ORDER
+  });
 };

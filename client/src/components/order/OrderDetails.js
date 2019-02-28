@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { setActiveOrder } from "../../actions/orderListActions";
 
 import Menu from "../menu/Menu";
 
@@ -12,10 +13,15 @@ class OrderDetails extends Component {
       orderId: this.props.match.params.id
     };
   }
+
+  componentDidMount() {
+    this.props.setActiveOrder(this.state.orderId);
+  }
+
   render() {
     return (
       <div>
-        <div className="create-profile">
+        <div className="create-order">
           <div className="row custom-row">
             <div className="col-md-7 ml-3">
               <Menu />
@@ -85,4 +91,16 @@ class OrderDetails extends Component {
   }
 }
 
-export default OrderDetails;
+OrderDetails.propTypes = {
+  orderList: PropTypes.object.isRequired,
+  setActiveOrder: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  orderList: state.orderList
+});
+
+export default connect(
+  mapStateToProps,
+  { setActiveOrder }
+)(OrderDetails);

@@ -5,10 +5,6 @@ import { connect } from "react-redux";
 import Spinner from "../common/spinner";
 
 class Menu extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.getFoodItems();
   }
@@ -21,8 +17,6 @@ class Menu extends Component {
     if (items === undefined) {
       menucontent = <Spinner />;
     } else {
-      console.log(items.category);
-
       const beverage = items
         .filter(item => !item.category.localeCompare("beverages"))
         .map(bev => (

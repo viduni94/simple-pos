@@ -39,15 +39,19 @@ exports.getAllOpenOrders = (req, res) => {
     });
 };
 
-// exports.updateOrder = (req, res) => {
-//   Order.findByIdAndUpdate(req.params.id, { orderItems: req.body.orderItems }, { new: true }, (err, updatedOrder) => {
-//     if (!err) {
-//       res.json(updatedOrder);
-//     } else {
-//       console.log(err);
-//     }
-//   });
-// };
+//Get a single order by id
+exports.getOrder = (req, res) => {
+  console.log(req.params.id);
+  Order.findOne({ _id: req.params.id })
+    .populate("customer")
+    .exec((err, order) => {
+      if (!err) {
+        res.json(order);
+      } else {
+        console.log(err);
+      }
+    });
+};
 
 exports.addOrderItem = (req, res) => {
   const { errors, isValid } = validateOrderItemInput(req.body);

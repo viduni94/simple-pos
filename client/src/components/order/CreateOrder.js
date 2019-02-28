@@ -28,7 +28,7 @@ export class CreateOrder extends Component {
 
   render() {
     return (
-      <div className="create-profile">
+      <div className="create-order">
         <div className="row custom-row">
           <div className="col-md-7 ml-3">
             <Menu />

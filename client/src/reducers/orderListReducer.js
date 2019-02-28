@@ -1,8 +1,8 @@
-import { GET_ORDERLIST, ORDERLIST_LOADING } from "../actions/types";
+import { GET_ORDERLIST, ORDERLIST_LOADING, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER } from "../actions/types";
 
 const initialState = {
-  order: null,
   orderLists: null,
+  activeOrder: null,
   loading: false
 };
 
@@ -18,6 +18,16 @@ export default function(state = initialState, action) {
         ...state,
         orderLists: action.payload,
         loading: false
+      };
+    case SET_ACTIVE_ORDER:
+      return {
+        ...state,
+        activeOrder: action.payload
+      };
+    case RESET_ACTIVE_ORDER:
+      return {
+        ...state,
+        activeOrder: null
       };
     default:
       return state;
