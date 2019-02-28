@@ -30,6 +30,7 @@ exports.createOrder = (req, res) => {
 exports.getAllOpenOrders = (req, res) => {
   Order.find({ status: true })
     .populate("customer")
+    .populate("orderItems.foodItem")
     .exec((err, orders) => {
       if (!err) {
         res.json(orders);

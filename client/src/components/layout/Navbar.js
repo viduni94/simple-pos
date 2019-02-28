@@ -16,6 +16,9 @@ class Navbar extends Component {
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">
+        <Link to="/create-order" className="btn btn-logout">
+          Create New Order
+        </Link>
         <button onClick={this.onLogoutClick.bind(this)} className="btn btn-logout">
           Logout
         </button>
@@ -24,7 +27,7 @@ class Navbar extends Component {
 
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/login">
           SimplePOS
         </Link>
         <button style={isAuthenticated ? null : { display: "none" }} className="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
