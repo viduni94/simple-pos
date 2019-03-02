@@ -307,3 +307,12 @@ img {
     border-radius: 4px;
   }
 }
+
+@media only screen and (min-width: 600px) {
+  .custom-table-1 {
+    height: 33vh;
+    overflow-y: auto;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+  }
+}

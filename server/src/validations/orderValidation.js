@@ -6,7 +6,6 @@ module.exports = function validateOrderInput(data) {
   let errors = {};
 
   data.orderDate = !isEmpty(data.orderDate) ? data.orderDate : "";
-  data.itemCount = !isEmpty(data.itemCount) ? data.itemCount : "";
 
   if (isEmpty(data.orderItems)) {
     errors.orderItems = "There should be at least one item for an order.";
@@ -20,7 +19,7 @@ module.exports = function validateOrderInput(data) {
     errors.customerId = "Invalid customer ID";
   }
 
-  if (Validator.isEmpty(data.itemCount)) {
+  if (isEmpty(data.itemCount)) {
     errors.itemCount = "The item count field is required.";
   }
 

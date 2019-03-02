@@ -13,8 +13,8 @@ exports.createOrder = (req, res) => {
   const newOrder = new Order({
     orderDate: req.body.orderDate,
     itemCount: req.body.itemCount,
-    userId: req.body.userId,
-    customerId: req.body.customerId,
+    user: req.body.userId,
+    customer: req.body.customerId,
     orderItems: req.body.orderItems
   });
 

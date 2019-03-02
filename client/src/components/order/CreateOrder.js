@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import AddCustomerModal from "../modals/AddCustomerModal";
-import FindCustomerModal from "../modals/FindCustomerModal";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { Alert } from "reactstrap";
 
 import { resetActiveCustomer } from "../../actions/customerActions";
 
 import Menu from "../menu/Menu";
+import AddCustomerModal from "../modals/AddCustomerModal";
+import FindCustomerModal from "../modals/FindCustomerModal";
 
 export class CreateOrder extends Component {
   constructor(props) {
@@ -19,17 +22,21 @@ export class CreateOrder extends Component {
       orderDate: curr,
       itemCount: "",
       status: "",
-      userId: "",
+      userId: this.props.auth.user.id,
       customerId: "",
       customerName: "",
-      orderItems: "",
+      orderItems: [],
       errors: {},
       modal1: false,
       modal2: false,
-      backdrop: true
+      backdrop: true,
+      successMessage: false,
+      errorMessage: false
     };
     this.toggle1 = this.toggle1.bind(this);
     this.toggle2 = this.toggle2.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   toggle1() {
@@ -44,6 +51,17 @@ export class CreateOrder extends Component {
     }));
   }
 
+  componentDidMount() {
+    this.setState({
+      orderItems: {
+        foodItem: "5c74a16fc66e2266aaf37c6d",
+        itemCount: 2
+      },
+      customerId: JSON.parse(localStorage.getItem("activeCustomer"))._id,
+      itemCount: this.state.orderItems.length
+    });
+  }
+
   componentWillUnmount() {
     this.props.resetActiveCustomer();
   }
@@ -52,13 +70,67 @@ export class CreateOrder extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onSubmit(e) {
+    e.preventDefault();
+
+    const orderData = {
+      orderDate: this.state.orderDate,
+      itemCount: this.state.itemCount,
+      userId: this.state.userId,
+      customerId: this.state.customerId,
+      orderItems: this.state.orderItems
+    };
+    axios
+      .post("/order", orderData)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ successMessage: true });
+        return res.data;
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({ errorMessage: true });
+      });
+
+    setTimeout(
+      function() {
+        this.setState({ successMessage: false, errorMessage: false });
+      }.bind(this),
+      4000
+    );
+  }
+
   render() {
+    // Get active customer details from persistent storage (local)
     let customer = JSON.parse(localStorage.getItem("activeCustomer"));
     let customerName;
     if (customer) {
       customerName = customer.fname + " " + customer.lname;
     }
-    console.log(customer);
+
+    // List for order items
+    let orderItemsContent;
+    let totalItemCount;
+    let totalBillAmount;
+
+    if (this.state.orderItems.length > 0) {
+      orderItemsContent = this.state.orderItems.map((item, index) => (
+        <tr key={index}>
+          <th scope="row">{index + 1}</th>
+          <td>{item.foodItem.name}</td>
+          <td className="text-center">{item.itemCount}</td>
+          <td className="text-right pr-5">{(item.foodItem.unitPrice / 100).toFixed(2)}</td>
+        </tr>
+      ));
+
+      totalItemCount = this.state.orderItems.reduce((acc, currValue) => {
+        return acc + currValue.itemCount;
+      }, 0);
+
+      totalBillAmount = this.state.orderItems.reduce((acc, currValue) => {
+        return acc + currValue.foodItem.unitPrice;
+      }, 0);
+    }
 
     return (
       <>
@@ -81,8 +153,13 @@ export class CreateOrder extends Component {
                   </button>
                 </div>
               </div>
-              <small className="d-block pb-3">* = required fields</small>
-              <form action="add-experience.html">
+              <form onSubmit={this.onSubmit}>
+                <Alert isOpen={this.state.successMessage} color="success">
+                  Order submitted succesfully!
+                </Alert>
+                <Alert isOpen={this.state.errorMessage} color="danger">
+                  An error occurred while submitting order!
+                </Alert>
                 <div className="form-group">
                   <input type="text" className="form-control form-control-lg" name="customerName" value={customerName} required readOnly />
                   <small className="form-text text-muted">Customer Name *</small>
@@ -91,7 +168,7 @@ export class CreateOrder extends Component {
                   <input type="text" className="form-control form-control-lg" value={this.state.orderDate.toISOString().substr(0, 10)} name="orderDate" required readOnly />
                   <small className="form-text text-muted">Order Date *</small>
                 </div>
-                <div className="form-group">
+                <div className="form-group custom-table-1">
                   <table className="table">
                     <thead className="thead-light">
                       <tr>
@@ -102,36 +179,29 @@ export class CreateOrder extends Component {
                       </tr>
                     </thead>
                     <tbody>
+                      {orderItemsContent}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
+                        <th scope="row">{totalItemCount ? "Total" : null}</th>
+                        <td />
+                        <td className="text-center">
+                          <b>{totalItemCount ? totalItemCount : null}</b>
+                        </td>
+                        <td className="text-right pr-5">
+                          <b>{totalBillAmount ? (totalBillAmount / 100).toFixed(2) : null}</b>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div className="row col-md-12">
                   <div className="col-md-6">
-                    <button type="submit" className="btn btn-secondary btn-block mr-4">
+                    <Link to="/dashboard" className="btn btn-secondary btn-block mr-4">
                       Cancel
-                    </button>
+                    </Link>
                   </div>
                   <div className="col-md-6">
                     <button type="submit" className="btn btn-normal btn-block ml-4">
-                      Submit
+                      Submit Order
                     </button>
                   </div>
                 </div>
@@ -150,13 +220,15 @@ CreateOrder.propTpes = {
   order: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   customer: PropTypes.object.isRequired,
-  resetActiveCustomer: PropTypes.func.isRequired
+  resetActiveCustomer: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   order: state.order,
   errors: state.errors,
-  customer: state.customer
+  customer: state.customer,
+  auth: state.auth
 });
 
 export default connect(
