@@ -57,8 +57,21 @@ export class CreateOrder extends Component {
         foodItem: "5c74a16fc66e2266aaf37c6d",
         itemCount: 2
       },
-      customerId: JSON.parse(localStorage.getItem("activeCustomer"))._id,
+      customerId: localStorage.getItem("activeCustomer") ? JSON.parse(localStorage.getItem("activeCustomer"))._id : "",
+      customerName: localStorage.getItem("activeCustomer") ? JSON.parse(localStorage.getItem("activeCustomer")).fname + " " + JSON.parse(localStorage.getItem("activeCustomer")).lname : "",
       itemCount: this.state.orderItems.length
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState({
+      customerName: !localStorage.getItem("activeCustomer")
+        ? this.props.customer.customer
+          ? this.props.customer.customer.fname + " " + this.props.customer.customer.lname
+          : ""
+        : JSON.parse(localStorage.getItem("activeCustomer")).fname + " " + JSON.parse(localStorage.getItem("activeCustomer")).lname,
+      customerId: !localStorage.getItem("activeCustomer") ? (this.props.customer.customer ? this.props.customer.customer._id : "") : JSON.parse(localStorage.getItem("activeCustomer"))._id
     });
   }
 
@@ -83,13 +96,13 @@ export class CreateOrder extends Component {
     axios
       .post("/order", orderData)
       .then(res => {
-        console.log(res.data);
-        this.setState({ successMessage: true });
+        this.setState({ successMessage: true, customerId: "", customerName: "", orderItems: [], itemCount: "", status: "" });
+        localStorage.removeItem("activeCustomer");
         return res.data;
       })
       .catch(err => {
-        console.log(err);
         this.setState({ errorMessage: true });
+        return err;
       });
 
     setTimeout(
@@ -102,11 +115,6 @@ export class CreateOrder extends Component {
 
   render() {
     // Get active customer details from persistent storage (local)
-    let customer = JSON.parse(localStorage.getItem("activeCustomer"));
-    let customerName;
-    if (customer) {
-      customerName = customer.fname + " " + customer.lname;
-    }
 
     // List for order items
     let orderItemsContent;
@@ -161,7 +169,7 @@ export class CreateOrder extends Component {
                   An error occurred while submitting order!
                 </Alert>
                 <div className="form-group">
-                  <input type="text" className="form-control form-control-lg" name="customerName" value={customerName} required readOnly />
+                  <input type="text" className="form-control form-control-lg" name="customerName" value={this.state.customerName} required readOnly />
                   <small className="form-text text-muted">Customer Name *</small>
                 </div>
                 <div className="form-group">
