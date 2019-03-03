@@ -4,11 +4,13 @@ import errorReducer from "./errorReducer";
 import orderListReducer from "./orderListReducer";
 import itemReducer from "./itemReducer";
 import customerReducer from "./customerReducer";
+import pageReducer from "./pageReducer";
 
 export default combineReducers({
   auth: authReducer,
   errors: errorReducer,
   orderList: orderListReducer,
   item: itemReducer,
-  customer: customerReducer
+  customer: customerReducer,
+  page: pageReducer
 });

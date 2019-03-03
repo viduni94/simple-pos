@@ -6,6 +6,7 @@ import axios from "axios";
 import { Alert } from "reactstrap";
 
 import { resetActiveCustomer } from "../../actions/customerActions";
+import { setActivePage } from "../../actions/pageActions";
 
 import Menu from "../menu/Menu";
 import AddCustomerModal from "../modals/AddCustomerModal";
@@ -52,11 +53,8 @@ export class CreateOrder extends Component {
   }
 
   componentDidMount() {
+    this.props.setActivePage("newOrder");
     this.setState({
-      orderItems: {
-        foodItem: "5c74a16fc66e2266aaf37c6d",
-        itemCount: 2
-      },
       customerId: localStorage.getItem("activeCustomer") ? JSON.parse(localStorage.getItem("activeCustomer"))._id : "",
       customerName: localStorage.getItem("activeCustomer") ? JSON.parse(localStorage.getItem("activeCustomer")).fname + " " + JSON.parse(localStorage.getItem("activeCustomer")).lname : "",
       itemCount: this.state.orderItems.length
@@ -64,7 +62,6 @@ export class CreateOrder extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.setState({
       customerName: !localStorage.getItem("activeCustomer")
         ? this.props.customer.customer
@@ -228,18 +225,21 @@ CreateOrder.propTpes = {
   order: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   customer: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired,
   resetActiveCustomer: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  setActivePage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   order: state.order,
   errors: state.errors,
   customer: state.customer,
-  auth: state.auth
+  auth: state.auth,
+  page: state.page
 });
 
 export default connect(
   mapStateToProps,
-  { resetActiveCustomer }
+  { resetActiveCustomer, setActivePage }
 )(CreateOrder);

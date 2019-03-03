@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import { setActivePage } from "../../actions/pageActions";
 
 import Logo from "../../img/logo.png";
 
@@ -22,6 +23,7 @@ class Login extends Component {
 
   //To redirect to dashboard when logged in
   componentDidMount() {
+    this.props.setActivePage("login");
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
@@ -89,15 +91,18 @@ class Login extends Component {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired,
+  setActivePage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  page: state.page
 });
 
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, setActivePage }
 )(Login);

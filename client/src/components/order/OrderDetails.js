@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import { setActiveOrder, getOpenOrderList } from "../../actions/orderListActions";
 import { getFoodItems } from "../../actions/itemActions";
+import { setActivePage } from "../../actions/pageActions";
 
 import Menu from "../menu/Menu";
 
@@ -23,6 +24,7 @@ class OrderDetails extends Component {
     this.props.setActiveOrder(this.state.orderId);
     this.props.getOpenOrderList();
     this.props.getFoodItems();
+    this.props.setActivePage("orderDetails");
   }
 
   render() {
@@ -140,17 +142,20 @@ class OrderDetails extends Component {
 
 OrderDetails.propTypes = {
   orderList: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired,
   setActiveOrder: PropTypes.func.isRequired,
   getOpenOrderList: PropTypes.func.isRequired,
-  getFoodItems: PropTypes.func.isRequired
+  getFoodItems: PropTypes.func.isRequired,
+  setActivePage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   orderList: state.orderList,
-  item: state.item
+  item: state.item,
+  page: state.page
 });
 
 export default connect(
   mapStateToProps,
-  { setActiveOrder, getOpenOrderList, getFoodItems }
+  { setActiveOrder, getOpenOrderList, getFoodItems, setActivePage }
 )(OrderDetails);
