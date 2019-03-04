@@ -29,7 +29,6 @@ class AddCustomerModal extends Component {
   }
 
   toggleModalClose = () => {
-    console.log(1);
     this.setState({ fname: "", lname: "", mobile: "" });
   };
 
@@ -43,6 +42,7 @@ class AddCustomerModal extends Component {
       userId: this.state.userId
     };
     this.props.addCustomer(customerData);
+    this.setState({ fname: "", lname: "", mobile: "" });
   }
 
   onChange(e) {

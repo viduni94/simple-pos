@@ -7,10 +7,6 @@ const OrderSchema = new Schema({
     required: true,
     default: Date.now
   },
-  itemCount: {
-    type: Number,
-    required: true
-  },
   status: {
     type: Boolean,
     required: true,

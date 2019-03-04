@@ -19,10 +19,6 @@ module.exports = function validateOrderInput(data) {
     errors.customerId = "Invalid customer ID";
   }
 
-  if (isEmpty(data.itemCount)) {
-    errors.itemCount = "The item count field is required.";
-  }
-
   if (Validator.isEmpty(data.orderDate)) {
     errors.orderDate = "The order date field is required.";
   }

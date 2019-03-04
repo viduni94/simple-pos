@@ -96,6 +96,21 @@ export class CreateOrder extends Component {
     }
   };
 
+  removeOneItem(id) {
+    let temp = [...this.state.orderItems];
+    const index = temp.map(orderItem => orderItem.foodItem).indexOf(id);
+    if (index > -1) {
+      if (temp[index].itemCount > 1) {
+        temp[index].itemCount = temp[index].itemCount - 1;
+      } else {
+        temp.splice(index, 1);
+      }
+    }
+    this.setState({
+      orderItems: temp
+    });
+  }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -105,7 +120,6 @@ export class CreateOrder extends Component {
 
     const orderData = {
       orderDate: this.state.orderDate,
-      itemCount: this.state.itemCount,
       userId: this.state.userId,
       customerId: this.state.customerId,
       orderItems: this.state.orderItems
@@ -123,12 +137,12 @@ export class CreateOrder extends Component {
         return err;
       });
 
-    // setTimeout(
-    //   function() {
-    //     this.setState({ successMessage: false, errorMessage: false });
-    //   }.bind(this),
-    //   4000
-    // );
+    setTimeout(
+      function() {
+        this.setState({ successMessage: false, errorMessage: false });
+      }.bind(this),
+      4000
+    );
   }
 
   render() {
@@ -146,6 +160,11 @@ export class CreateOrder extends Component {
             <td>{i.name}</td>
             <td className="text-center">{item.itemCount}</td>
             <td className="text-right pr-5">{((i.unitPrice * item.itemCount) / 100).toFixed(2)}</td>
+            <td>
+              <button type="button" className="btn btn-danger btn-sm" onClick={this.removeOneItem.bind(this, item.foodItem)}>
+                <i className="fa fa-minus" aria-hidden="true" />
+              </button>
+            </td>
           </tr>
         );
       });
@@ -204,6 +223,7 @@ export class CreateOrder extends Component {
                         <th scope="col">Item</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -217,6 +237,7 @@ export class CreateOrder extends Component {
                         <td className="text-right pr-5">
                           <b>{totalBillAmount ? (totalBillAmount / 100).toFixed(2) : null}</b>
                         </td>
+                        <td />
                       </tr>
                     </tbody>
                   </table>
