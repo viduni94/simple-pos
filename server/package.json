@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/viduni94/simple-pos#readme",
   "devDependencies": {
+    "jest": "^24.1.0",
     "nodemon": "^1.18.10"
   },
   "dependencies": {

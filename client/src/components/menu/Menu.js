@@ -6,9 +6,38 @@ import Spinner from "../common/spinner";
 import FoodItem from "./FoodItem";
 
 class Menu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.foodItemList = [];
+    this.foodItem = {};
+
+    this.addItem = this.addItem.bind(this);
+    this.addItemToNewList = this.addItemToNewList.bind(this);
+    this.addItemToOldList = this.addItemToOldList.bind(this);
+    this.addItemToEditOrder = this.addItemToEditOrder.bind(this);
+  }
+
   componentDidMount() {
     this.props.getFoodItems();
   }
+
+  addItemToNewList = item => {
+    this.props.callbackFromParent(item);
+  };
+
+  addItem = dataFromFoodItem => {
+    this.addItemToNewList(dataFromFoodItem);
+  };
+
+  addItemToOldList = item => {
+    this.foodItem = item;
+    this.props.callbackFromParent(this.foodItem);
+  };
+
+  addItemToEditOrder = dataFromFoodItem => {
+    this.addItemToOldList(dataFromFoodItem);
+  };
 
   render() {
     const { items } = this.props.item;
@@ -18,13 +47,13 @@ class Menu extends Component {
     if (items === undefined) {
       menucontent = <Spinner />;
     } else {
-      const beverage = items.filter(item => !item.category.localeCompare("beverages")).map(bev => <FoodItem key={bev._id} category={bev} />);
+      const beverage = items.filter(item => !item.category.localeCompare("beverages")).map(bev => <FoodItem key={bev._id} category={bev} callbackFromParent={this.addItem} callbackFromEditOrder={this.addItemToEditOrder} />);
 
-      const appetizer = items.filter(item => !item.category.localeCompare("appetizers")).map(app => <FoodItem key={app._id} category={app} />);
+      const appetizer = items.filter(item => !item.category.localeCompare("appetizers")).map(app => <FoodItem key={app._id} category={app} callbackFromParent={this.addItem} callbackFromEditOrder={this.addItemToEditOrder} />);
 
-      const main = items.filter(item => !item.category.localeCompare("mains")).map(main => <FoodItem key={main._id} category={main} />);
+      const main = items.filter(item => !item.category.localeCompare("mains")).map(main => <FoodItem key={main._id} category={main} callbackFromParent={this.addItem} callbackFromEditOrder={this.addItemToEditOrder} />);
 
-      const dessert = items.filter(item => !item.category.localeCompare("desserts")).map(des => <FoodItem key={des._id} category={des} />);
+      const dessert = items.filter(item => !item.category.localeCompare("desserts")).map(des => <FoodItem key={des._id} category={des} callbackFromParent={this.addItem} callbackFromEditOrder={this.addItemToEditOrder} />);
 
       menucontent = (
         <div className="tab-content">

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER } from "./types";
+import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER, ADD_ITEM_TO_ORDER } from "./types";
 
 //Get order list for current user
 export const getOpenOrderList = () => dispatch => {
@@ -41,4 +41,21 @@ export const resetActiveOrder = () => dispatch => {
   dispatch({
     type: RESET_ACTIVE_ORDER
   });
+};
+
+export const addItemToOrder = order => dispatch => {
+  axios
+    .post("/order/orderItem/:id", order)
+    .then(res => {
+      dispatch({
+        type: ADD_ITEM_TO_ORDER,
+        payload: res.data
+      });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+    );
 };

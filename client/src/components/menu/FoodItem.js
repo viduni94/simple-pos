@@ -1,6 +1,22 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class FoodItem extends Component {
+  selectedItem = (itemId, itemName, itemPrice) => {
+    let item = {
+      foodItem: itemId,
+      name: itemName,
+      price: itemPrice,
+      itemCount: 1
+    };
+    if (this.props.page.active === "newOrder") {
+      this.props.callbackFromParent(item);
+    } else if (this.props.page.active === "orderDetails") {
+      this.props.callbackFromEditOrder(item);
+    }
+  };
+
   render() {
     let categoryType = this.props.category;
 
@@ -19,7 +35,9 @@ class FoodItem extends Component {
                 <span className="mu-menu-price">{(categoryType.unitPrice / 100).toFixed(2)} LKR</span>
                 <p>{categoryType.menu}</p>
                 <p>
-                  <button className="btn btn-normal btn-sm">Add Item</button>
+                  <button type="submit" className="btn btn-normal btn-sm" onClick={this.selectedItem.bind(this, categoryType._id, categoryType.name, categoryType.unitPrice)}>
+                    Add Item
+                  </button>
                 </p>
               </div>
             </div>
@@ -30,4 +48,14 @@ class FoodItem extends Component {
   }
 }
 
-export default FoodItem;
+FoodItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  item: state.item,
+  page: state.page
+});
+
+export default connect(mapStateToProps)(FoodItem);

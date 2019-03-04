@@ -1,6 +1,5 @@
 const Order = require("../models/OrderModel");
 const validateOrderInput = require("../validations/orderValidation");
-const validateOrderItemInput = require("../validations/orderItemValidation");
 
 exports.createOrder = (req, res) => {
   const { errors, isValid } = validateOrderInput(req.body);
@@ -27,6 +26,7 @@ exports.createOrder = (req, res) => {
     .catch(err => console.log(err));
 };
 
+// Get all open orders
 exports.getAllOpenOrders = (req, res) => {
   Order.find({ status: true })
     .populate("customer")
@@ -55,14 +55,7 @@ exports.getOrder = (req, res) => {
 };
 
 exports.addOrderItem = (req, res) => {
-  const { errors, isValid } = validateOrderItemInput(req.body);
-
-  //Check Validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  Order.findOne({ _id: req.params.id }).then(order => {
+  Order.findOne({ _id: req.body.orderId }).then(order => {
     // TODO: if a fooditem exists, increase count
 
     // order.orderItems.forEach(function(orderItem) {
@@ -79,7 +72,10 @@ exports.addOrderItem = (req, res) => {
     //Add to orderItem array
     order.orderItems.unshift(newOrderItem);
 
-    order.save().then(order => res.json(order));
+    order.save().then(order => {
+      order.populate("orderItems.foodItem");
+      res.json(order);
+    });
   });
 };
 

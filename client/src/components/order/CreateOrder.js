@@ -27,6 +27,7 @@ export class CreateOrder extends Component {
       customerId: "",
       customerName: "",
       orderItems: [],
+      items: [],
       errors: {},
       modal1: false,
       modal2: false,
@@ -52,6 +53,10 @@ export class CreateOrder extends Component {
     }));
   }
 
+  componentWillUnmount() {
+    this.props.resetActiveCustomer();
+  }
+
   componentDidMount() {
     this.props.setActivePage("newOrder");
     this.setState({
@@ -61,7 +66,7 @@ export class CreateOrder extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     this.setState({
       customerName: !localStorage.getItem("activeCustomer")
         ? this.props.customer.customer
@@ -72,9 +77,24 @@ export class CreateOrder extends Component {
     });
   }
 
-  componentWillUnmount() {
-    this.props.resetActiveCustomer();
-  }
+  getOrderItems = item => {
+    if (item) {
+      let temp = [...this.state.orderItems];
+      let obj = {
+        foodItem: item.foodItem,
+        itemCount: item.itemCount
+      };
+      const index = temp.map(orderItem => orderItem.foodItem).indexOf(item.foodItem);
+      if (index > -1) {
+        temp[index].itemCount = temp[index].itemCount + item.itemCount;
+      } else {
+        temp = [...temp, obj];
+      }
+      this.setState({
+        orderItems: temp
+      });
+    }
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -90,10 +110,11 @@ export class CreateOrder extends Component {
       customerId: this.state.customerId,
       orderItems: this.state.orderItems
     };
+    console.log(orderData);
     axios
       .post("/order", orderData)
       .then(res => {
-        this.setState({ successMessage: true, customerId: "", customerName: "", orderItems: [], itemCount: "", status: "" });
+        this.setState({ successMessage: true, customerId: "", customerName: "", orderItems: [], itemCount: "", status: "", items: [] });
         localStorage.removeItem("activeCustomer");
         return res.data;
       })
@@ -102,38 +123,40 @@ export class CreateOrder extends Component {
         return err;
       });
 
-    setTimeout(
-      function() {
-        this.setState({ successMessage: false, errorMessage: false });
-      }.bind(this),
-      4000
-    );
+    // setTimeout(
+    //   function() {
+    //     this.setState({ successMessage: false, errorMessage: false });
+    //   }.bind(this),
+    //   4000
+    // );
   }
 
   render() {
-    // Get active customer details from persistent storage (local)
-
     // List for order items
     let orderItemsContent;
     let totalItemCount;
     let totalBillAmount;
 
     if (this.state.orderItems.length > 0) {
-      orderItemsContent = this.state.orderItems.map((item, index) => (
-        <tr key={index}>
-          <th scope="row">{index + 1}</th>
-          <td>{item.foodItem.name}</td>
-          <td className="text-center">{item.itemCount}</td>
-          <td className="text-right pr-5">{(item.foodItem.unitPrice / 100).toFixed(2)}</td>
-        </tr>
-      ));
+      orderItemsContent = this.state.orderItems.map((item, index) => {
+        const i = this.props.item.items.filter(item1 => item1._id === item.foodItem)[0];
+        return (
+          <tr key={index}>
+            <th scope="row">{index + 1}</th>
+            <td>{i.name}</td>
+            <td className="text-center">{item.itemCount}</td>
+            <td className="text-right pr-5">{((i.unitPrice * item.itemCount) / 100).toFixed(2)}</td>
+          </tr>
+        );
+      });
 
       totalItemCount = this.state.orderItems.reduce((acc, currValue) => {
         return acc + currValue.itemCount;
       }, 0);
 
       totalBillAmount = this.state.orderItems.reduce((acc, currValue) => {
-        return acc + currValue.foodItem.unitPrice;
+        const i = this.props.item.items.filter(item1 => item1._id === currValue.foodItem)[0];
+        return acc + i.unitPrice * currValue.itemCount;
       }, 0);
     }
 
@@ -142,7 +165,7 @@ export class CreateOrder extends Component {
         <div className="create-order">
           <div className="row custom-row">
             <div className="col-md-7 ml-3">
-              <Menu />
+              <Menu callbackFromParent={this.getOrderItems} />
             </div>
             <div className="col-md-4 ml-5">
               <h2 className="text-center mu-title">Create New Order</h2>
@@ -236,7 +259,8 @@ const mapStateToProps = state => ({
   errors: state.errors,
   customer: state.customer,
   auth: state.auth,
-  page: state.page
+  page: state.page,
+  item: state.item
 });
 
 export default connect(

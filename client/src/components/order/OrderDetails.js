@@ -5,7 +5,7 @@ import Spinner from "../common/spinner";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-import { setActiveOrder, getOpenOrderList } from "../../actions/orderListActions";
+import { setActiveOrder, getOpenOrderList, addItemToOrder } from "../../actions/orderListActions";
 import { getFoodItems } from "../../actions/itemActions";
 import { setActivePage } from "../../actions/pageActions";
 
@@ -18,6 +18,10 @@ class OrderDetails extends Component {
     this.state = {
       orderId: this.props.match.params.id
     };
+
+    this.remove = this.remove.bind(this);
+    this.getOrderItems = this.getOrderItems.bind(this);
+    this.newOrderItemObj = {};
   }
 
   componentDidMount() {
@@ -26,6 +30,25 @@ class OrderDetails extends Component {
     this.props.getFoodItems();
     this.props.setActivePage("orderDetails");
   }
+
+  getOrderItems = dataFromMenu => {
+    let orderDetails = this.props.orderList.orderLists.filter(order => !order._id.localeCompare(this.props.orderList.activeOrder));
+
+    this.newOrderItemObj = {
+      foodItem: dataFromMenu.foodItem,
+      itemCount: dataFromMenu.itemCount,
+      orderId: orderDetails[0]._id
+    };
+
+    // console.log(orderDetails);
+    // orderDetails[0].orderItems.push(this.newOrderItemObj);
+    // console.log(orderDetails);
+
+    this.props.addItemToOrder(this.newOrderItemObj);
+    this.props.getOpenOrderList();
+  };
+
+  remove(id) {}
 
   render() {
     const { orderLists, activeOrder, loading } = this.props.orderList;
@@ -52,6 +75,11 @@ class OrderDetails extends Component {
               <td>{item.foodItem.name}</td>
               <td className="text-center">{item.itemCount}</td>
               <td className="text-right pr-5">{(item.foodItem.unitPrice / 100).toFixed(2)}</td>
+              <td className="text-center">
+                <button type="button" className="btn btn-danger" onClick={this.remove(item._id)}>
+                  <span className="glyphicon glyphicon-minus" />
+                </button>
+              </td>
             </tr>
           ));
 
@@ -85,6 +113,9 @@ class OrderDetails extends Component {
                         <th scope="col" className=" text-center">
                           Price (LKR)
                         </th>
+                        <th scope="col" className=" text-center">
+                          Action
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -98,6 +129,7 @@ class OrderDetails extends Component {
                         <td className="text-right pr-5">
                           <b>{(totalBillAmount / 100).toFixed(2)}</b>
                         </td>
+                        <td />
                       </tr>
                     </tbody>
                   </table>
@@ -110,7 +142,7 @@ class OrderDetails extends Component {
                   </div>
                   <div className="col-md-6">
                     <button type="submit" className="btn btn-normal btn-block ml-4">
-                      Submit
+                      Checkout
                     </button>
                   </div>
                 </div>
@@ -126,7 +158,7 @@ class OrderDetails extends Component {
         <div className="create-order">
           <div className="row custom-row">
             <div className="col-md-7 ml-3">
-              <Menu />
+              <Menu callbackFromParent={this.getOrderItems} />
             </div>
             <div className="col-md-4 ml-5">
               <h2 className="text-center mu-title">Details of Order No:</h2>
@@ -146,7 +178,8 @@ OrderDetails.propTypes = {
   setActiveOrder: PropTypes.func.isRequired,
   getOpenOrderList: PropTypes.func.isRequired,
   getFoodItems: PropTypes.func.isRequired,
-  setActivePage: PropTypes.func.isRequired
+  setActivePage: PropTypes.func.isRequired,
+  addItemToOrder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -157,5 +190,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setActiveOrder, getOpenOrderList, getFoodItems, setActivePage }
+  { setActiveOrder, getOpenOrderList, getFoodItems, setActivePage, addItemToOrder }
 )(OrderDetails);
