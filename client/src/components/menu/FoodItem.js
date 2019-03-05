@@ -10,11 +10,8 @@ class FoodItem extends Component {
       price: itemPrice,
       itemCount: 1
     };
-    if (this.props.page.active === "newOrder") {
-      this.props.callbackFromParent(item);
-    } else if (this.props.page.active === "orderDetails") {
-      this.props.callbackFromEditOrder(item);
-    }
+
+    this.props.callbackFromParent(item);
   };
 
   render() {

@@ -146,7 +146,6 @@ export class CreateOrder extends Component {
   }
 
   render() {
-    // List for order items
     let orderItemsContent;
     let totalItemCount;
     let totalBillAmount;

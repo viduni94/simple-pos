@@ -5,7 +5,7 @@ import Spinner from "../common/spinner";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-import { setActiveOrder, getOpenOrderList, addItemToOrder } from "../../actions/orderListActions";
+import { setActiveOrder, getOpenOrderList, addItemToOrder, deleteItemFromOrder } from "../../actions/orderListActions";
 import { getFoodItems } from "../../actions/itemActions";
 import { setActivePage } from "../../actions/pageActions";
 
@@ -19,7 +19,6 @@ class OrderDetails extends Component {
       orderId: this.props.match.params.id
     };
 
-    this.remove = this.remove.bind(this);
     this.getOrderItems = this.getOrderItems.bind(this);
     this.newOrderItemObj = {};
   }
@@ -31,24 +30,23 @@ class OrderDetails extends Component {
     this.props.setActivePage("orderDetails");
   }
 
-  getOrderItems = dataFromMenu => {
+  getOrderItems = item => {
     let orderDetails = this.props.orderList.orderLists.filter(order => !order._id.localeCompare(this.props.orderList.activeOrder));
 
-    this.newOrderItemObj = {
-      foodItem: dataFromMenu.foodItem,
-      itemCount: dataFromMenu.itemCount,
-      orderId: orderDetails[0]._id
-    };
+    if (item) {
+      this.newOrderItemObj = {
+        foodItem: item.foodItem,
+        itemCount: item.itemCount,
+        orderId: orderDetails[0]._id
+      };
 
-    // console.log(orderDetails);
-    // orderDetails[0].orderItems.push(this.newOrderItemObj);
-    // console.log(orderDetails);
-
-    this.props.addItemToOrder(this.newOrderItemObj);
-    this.props.getOpenOrderList();
+      this.props.addItemToOrder(this.newOrderItemObj);
+    }
   };
 
-  remove(id) {}
+  removeOneItem(orderId, itemId) {
+    this.props.deleteItemFromOrder(orderId, itemId);
+  }
 
   render() {
     const { orderLists, activeOrder, loading } = this.props.orderList;
@@ -67,28 +65,31 @@ class OrderDetails extends Component {
       );
     } else {
       if (Object.keys(orderLists).length > 0) {
+        console.log(orderLists.filter(order => !order._id));
         activeOrderDetails = orderLists.filter(order => !order._id.localeCompare(activeOrder));
         if (activeOrderDetails.length > 0) {
-          activeOrderItems = activeOrderDetails[0].orderItems.map((item, index) => (
-            <tr key={item._id}>
-              <th scope="row">{index + 1}</th>
-              <td>{item.foodItem.name}</td>
-              <td className="text-center">{item.itemCount}</td>
-              <td className="text-right pr-5">{(item.foodItem.unitPrice / 100).toFixed(2)}</td>
-              <td className="text-center">
-                <button type="button" className="btn btn-danger" onClick={this.remove(item._id)}>
-                  <span className="glyphicon glyphicon-minus" />
-                </button>
-              </td>
-            </tr>
-          ));
+          activeOrderItems = activeOrderDetails[0].orderItems.map((item, index) => {
+            return (
+              <tr key={item._id}>
+                <th scope="row">{index + 1}</th>
+                <td>{item.foodItem.name}</td>
+                <td className="text-center">{item.itemCount}</td>
+                <td className="text-right pr-5">{((item.foodItem.unitPrice * item.itemCount) / 100).toFixed(2)}</td>
+                <td className="text-center">
+                  <button type="button" className="btn btn-danger btn-sm" onClick={this.removeOneItem.bind(this, activeOrderDetails[0]._id, item._id)}>
+                    <i className="fa fa-minus" aria-hidden="true" />
+                  </button>
+                </td>
+              </tr>
+            );
+          });
 
           totalItemCount = activeOrderDetails[0].orderItems.reduce((acc, currValue) => {
             return acc + currValue.itemCount;
           }, 0);
 
           totalBillAmount = activeOrderDetails[0].orderItems.reduce((acc, currValue) => {
-            return acc + currValue.foodItem.unitPrice;
+            return acc + currValue.foodItem.unitPrice * currValue.itemCount;
           }, 0);
 
           activeOrderContent = (
@@ -179,7 +180,8 @@ OrderDetails.propTypes = {
   getOpenOrderList: PropTypes.func.isRequired,
   getFoodItems: PropTypes.func.isRequired,
   setActivePage: PropTypes.func.isRequired,
-  addItemToOrder: PropTypes.func.isRequired
+  addItemToOrder: PropTypes.func.isRequired,
+  deleteItemFromOrder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -190,5 +192,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setActiveOrder, getOpenOrderList, getFoodItems, setActivePage, addItemToOrder }
+  { setActiveOrder, getOpenOrderList, getFoodItems, setActivePage, addItemToOrder, deleteItemFromOrder }
 )(OrderDetails);

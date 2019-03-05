@@ -20,7 +20,6 @@ exports.createOrder = (req, res) => {
     .save()
     .then(order => {
       res.json(order);
-      console.log(order.id);
     })
     .catch(err => console.log(err));
 };
@@ -57,23 +56,25 @@ exports.addOrderItem = (req, res) => {
   Order.findOne({ _id: req.body.orderId }).then(order => {
     // TODO: if a fooditem exists, increase count
 
-    // order.orderItems.forEach(function(orderItem) {
-    //   if (orderItem.map(item => item.foodItem).indexOf(req.body.foodItem)) {
-    //     orderItem.itemCount = orderItem.itemCount + 1;
-    //   }
-    // });
-
     const newOrderItem = {
       foodItem: req.body.foodItem,
       itemCount: req.body.itemCount
     };
 
-    //Add to orderItem array
-    order.orderItems.unshift(newOrderItem);
+    index = order.orderItems.findIndex(e => e.foodItem === newOrderItem.foodItem);
+    if (index > -1) {
+      order.orderItems[index].itemCount = order.orderItems[index].itemCount + newOrderItem.itemCount;
+      console.log(index);
+    } else {
+      //Add to orderItem array
+      order.orderItems.unshift(newOrderItem);
+      console.log("new item");
+    }
 
     order.save().then(order => {
       order.populate("orderItems.foodItem");
       res.json(order);
+      console.log(order);
     });
   });
 };
@@ -81,16 +82,20 @@ exports.addOrderItem = (req, res) => {
 exports.deleteOrderItem = (req, res) => {
   //TODO: Delete only if item count is equal to 1, if not, decrease item count
 
-  Order.findOne({ _id: req.params.id })
+  Order.findOne({ _id: req.params.orderId })
     .then(order => {
       //Get remove index
-      const removeIndex = order.orderItems.map(item => item.id).indexOf(req.params.orderItemId);
-
-      //Splice out of the array
-      order.orderItems.splice(removeIndex, 1);
-
-      // save
+      const selectedItem = order.orderItems.filter(item => item.id === req.params.itemId);
+      if (selectedItem[0].itemCount > 1) {
+        selectedItem[0].itemCount = selectedItem[0].itemCount - 1;
+      } else {
+        const removeIndex = order.orderItems.map(item => item.id).indexOf(req.params.itemId);
+        //Splice out of the array
+        order.orderItems.splice(removeIndex, 1);
+      }
+      order.populate("orderItems.foodItem").execPopulate();
       order.save().then(order => res.json(order));
+      console.log(order);
     })
     .catch(err => res.status(404).json(err));
 };
