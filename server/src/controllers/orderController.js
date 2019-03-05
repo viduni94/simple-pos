@@ -105,3 +105,20 @@ exports.deleteOrderItem = (req, res) => {
     })
     .catch(err => res.status(404).json(err));
 };
+
+exports.checkoutOrder = (req, res) => {
+  Order.findOne({ _id: req.params.id }).then(order => {
+    // console.log(req.params.orderId);
+    order.status = false;
+    order.save((err, order) => {
+      if (err) {
+        console.log(err);
+      } else {
+        Order.findOne({ _id: order._id })
+          .populate("orderItems.foodItem")
+          .populate("customer")
+          .then(order => res.json(order));
+      }
+    });
+  });
+};

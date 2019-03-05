@@ -1,4 +1,4 @@
-import { GET_ORDERLIST, ORDERLIST_LOADING, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER, ADD_ITEM_TO_ORDER, DELETE_ITEM_FROM_ORDER } from "../actions/types";
+import { GET_ORDERLIST, ORDERLIST_LOADING, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER, ADD_ITEM_TO_ORDER, DELETE_ITEM_FROM_ORDER, CHECKOUT_ORDER } from "../actions/types";
 
 const initialState = {
   orderLists: null,
@@ -40,6 +40,16 @@ export default function(state = initialState, action) {
         })
       };
     case DELETE_ITEM_FROM_ORDER:
+      return {
+        ...state,
+        orderLists: state.orderLists.map(orderList => {
+          if (orderList._id === action.payload._id) {
+            return action.payload;
+          }
+          return orderList;
+        })
+      };
+    case CHECKOUT_ORDER:
       return {
         ...state,
         orderLists: state.orderLists.map(orderList => {

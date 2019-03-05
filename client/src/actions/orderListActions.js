@@ -1,6 +1,7 @@
 import axios from "axios";
+import history from "../utils/history";
 
-import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER, ADD_ITEM_TO_ORDER, DELETE_ITEM_FROM_ORDER } from "./types";
+import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS, SET_ACTIVE_ORDER, RESET_ACTIVE_ORDER, ADD_ITEM_TO_ORDER, DELETE_ITEM_FROM_ORDER, CHECKOUT_ORDER } from "./types";
 
 //Get order list for current user
 export const getOpenOrderList = () => dispatch => {
@@ -68,6 +69,24 @@ export const deleteItemFromOrder = (orderId, itemId) => dispatch => {
         type: DELETE_ITEM_FROM_ORDER,
         payload: res.data
       });
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err
+      })
+    );
+};
+
+export const checkoutOrder = orderId => dispatch => {
+  axios
+    .put(`/order/${orderId}`)
+    .then(res => {
+      dispatch({
+        type: CHECKOUT_ORDER,
+        payload: res.data
+      });
+      history.push("/dashboard");
     })
     .catch(err =>
       dispatch({

@@ -37,6 +37,10 @@ router.post("/order", passport.authenticate("jwt", { session: false }), orderCon
 // @desc Get an order by id
 router.get("/order/:id", passport.authenticate("jwt", { session: false }), orderController.getOrder);
 
+// @route PUT /order/:id
+// @desc Update order status by id
+router.put("/order/:id", passport.authenticate("jwt", { session: false }), orderController.checkoutOrder);
+
 // @route POST /order/orderItem/:id
 // @desc Add an order item to an order
 router.post("/order/orderItem/", passport.authenticate("jwt", { session: false }), orderController.addOrderItem);

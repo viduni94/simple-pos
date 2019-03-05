@@ -10,17 +10,28 @@ import { getFoodItems } from "../../actions/itemActions";
 import { setActivePage } from "../../actions/pageActions";
 
 import Menu from "../menu/Menu";
+import CheckoutConfirmModal from "../modals/CheckoutConfirmModal";
 
 class OrderDetails extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      orderId: this.props.match.params.id
+      orderId: this.props.match.params.id,
+      modal: false,
+      backdrop: true
     };
 
     this.getOrderItems = this.getOrderItems.bind(this);
     this.newOrderItemObj = {};
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   componentDidMount() {
@@ -65,7 +76,6 @@ class OrderDetails extends Component {
       );
     } else {
       if (Object.keys(orderLists).length > 0) {
-        console.log(orderLists.filter(order => !order._id));
         activeOrderDetails = orderLists.filter(order => !order._id.localeCompare(activeOrder));
         if (activeOrderDetails.length > 0) {
           activeOrderItems = activeOrderDetails[0].orderItems.map((item, index) => {
@@ -97,57 +107,58 @@ class OrderDetails extends Component {
               <p className="lead text-center mb-4">
                 Order Date - <b>{moment(activeOrderDetails[0].orderDate).format("Do MMM YYYY")}</b>
               </p>
-              <form action="add-experience.html">
-                <div className="form-group">
-                  <input type="text" className="form-control form-control-lg" name="customerId" value={activeOrderDetails[0].customer.fname + " " + activeOrderDetails[0].customer.lname} required readOnly />
-                  <small className="form-text text-muted">Customer Name</small>
+
+              <div className="form-group">
+                <input type="text" className="form-control form-control-lg" name="customerId" value={activeOrderDetails[0].customer.fname + " " + activeOrderDetails[0].customer.lname} required readOnly />
+                <small className="form-text text-muted">Customer Name</small>
+              </div>
+              <div className="form-group custom-table">
+                <table className="table">
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Item</th>
+                      <th scope="col" className="text-center">
+                        Quantity
+                      </th>
+                      <th scope="col" className=" text-center">
+                        Price (LKR)
+                      </th>
+                      <th scope="col" className=" text-center">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activeOrderItems}
+                    <tr>
+                      <th scope="row">Total</th>
+                      <td />
+                      <td className="text-center">
+                        <b>{totalItemCount}</b>
+                      </td>
+                      <td className="text-right pr-5">
+                        <b>{(totalBillAmount / 100).toFixed(2)}</b>
+                      </td>
+                      <td />
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="row col-md-12">
+                <div className="col-md-6">
+                  <Link to={"/dashboard"} className="btn btn-secondary btn-block mr-4">
+                    Go Back
+                  </Link>
                 </div>
-                <div className="form-group custom-table">
-                  <table className="table">
-                    <thead className="thead-light">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Item</th>
-                        <th scope="col" className="text-center">
-                          Quantity
-                        </th>
-                        <th scope="col" className=" text-center">
-                          Price (LKR)
-                        </th>
-                        <th scope="col" className=" text-center">
-                          Action
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {activeOrderItems}
-                      <tr>
-                        <th scope="row">Total</th>
-                        <td />
-                        <td className="text-center">
-                          <b>{totalItemCount}</b>
-                        </td>
-                        <td className="text-right pr-5">
-                          <b>{(totalBillAmount / 100).toFixed(2)}</b>
-                        </td>
-                        <td />
-                      </tr>
-                    </tbody>
-                  </table>
+                <div className="col-md-6">
+                  <button className="btn btn-normal btn-block ml-4" onClick={this.toggle}>
+                    Checkout
+                  </button>
                 </div>
-                <div className="row col-md-12">
-                  <div className="col-md-6">
-                    <Link to={"/dashboard"} className="btn btn-secondary btn-block mr-4">
-                      Cancel
-                    </Link>
-                  </div>
-                  <div className="col-md-6">
-                    <button type="submit" className="btn btn-normal btn-block ml-4">
-                      Checkout
-                    </button>
-                  </div>
-                </div>
-              </form>
+              </div>
+
+              <CheckoutConfirmModal toggle={{ toggle: this.toggle, modal: this.state.modal, backdrop: this.state.backdrop }} />
             </>
           );
         }
@@ -155,20 +166,22 @@ class OrderDetails extends Component {
     }
 
     return (
-      <div>
-        <div className="create-order">
-          <div className="row custom-row">
-            <div className="col-md-7 ml-3">
-              <Menu callbackFromParent={this.getOrderItems} />
-            </div>
-            <div className="col-md-4 ml-5">
-              <h2 className="text-center mu-title">Details of Order No:</h2>
-              <h5 className="text-center"> {activeOrder}</h5>
-              {activeOrderContent}
+      <>
+        <div>
+          <div className="create-order">
+            <div className="row custom-row">
+              <div className="col-md-7 ml-3">
+                <Menu callbackFromParent={this.getOrderItems} />
+              </div>
+              <div className="col-md-4 ml-5">
+                <h2 className="text-center mu-title">Details of Order No:</h2>
+                <h5 className="text-center"> {activeOrder}</h5>
+                {activeOrderContent}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
