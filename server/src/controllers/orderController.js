@@ -90,12 +90,20 @@ exports.deleteOrderItem = (req, res) => {
         selectedItem[0].itemCount = selectedItem[0].itemCount - 1;
       } else {
         const removeIndex = order.orderItems.map(item => item.id).indexOf(req.params.itemId);
+        console.log(removeIndex);
         //Splice out of the array
         order.orderItems.splice(removeIndex, 1);
       }
-      order.populate("orderItems.foodItem").execPopulate();
-      order.save().then(order => res.json(order));
-      console.log(order);
+      order.save((err, order) => {
+        if (err) {
+          console.log(err);
+        } else {
+          Order.findOne({ _id: order._id })
+            .populate("orderItems.foodItem")
+            .populate("customer")
+            .then(order => res.json(order));
+        }
+      });
     })
     .catch(err => res.status(404).json(err));
 };
