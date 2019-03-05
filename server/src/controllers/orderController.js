@@ -54,43 +54,41 @@ exports.getOrder = (req, res) => {
 
 exports.addOrderItem = (req, res) => {
   Order.findOne({ _id: req.body.orderId }).then(order => {
-    // TODO: if a fooditem exists, increase count
-
     const newOrderItem = {
       foodItem: req.body.foodItem,
       itemCount: req.body.itemCount
     };
 
-    index = order.orderItems.findIndex(e => e.foodItem === newOrderItem.foodItem);
-    if (index > -1) {
-      order.orderItems[index].itemCount = order.orderItems[index].itemCount + newOrderItem.itemCount;
-      console.log(index);
+    const selectedItem = order.orderItems.filter(item => item.foodItem.equals(req.body.foodItem));
+
+    if (selectedItem.length !== 0) {
+      selectedItem[0].itemCount = selectedItem[0].itemCount + newOrderItem.itemCount;
     } else {
       //Add to orderItem array
       order.orderItems.unshift(newOrderItem);
-      console.log("new item");
     }
 
-    order.save().then(order => {
-      order.populate("orderItems.foodItem");
-      res.json(order);
-      console.log(order);
+    order.save((err, order) => {
+      if (err) {
+        console.log(err);
+      } else {
+        Order.findOne({ _id: order._id })
+          .populate("orderItems.foodItem")
+          .populate("customer")
+          .then(order => res.json(order));
+      }
     });
   });
 };
 
 exports.deleteOrderItem = (req, res) => {
-  //TODO: Delete only if item count is equal to 1, if not, decrease item count
-
   Order.findOne({ _id: req.params.orderId })
     .then(order => {
-      //Get remove index
       const selectedItem = order.orderItems.filter(item => item.id === req.params.itemId);
       if (selectedItem[0].itemCount > 1) {
         selectedItem[0].itemCount = selectedItem[0].itemCount - 1;
       } else {
         const removeIndex = order.orderItems.map(item => item.id).indexOf(req.params.itemId);
-        console.log(removeIndex);
         //Splice out of the array
         order.orderItems.splice(removeIndex, 1);
       }

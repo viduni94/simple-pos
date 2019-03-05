@@ -39,7 +39,7 @@ router.get("/order/:id", passport.authenticate("jwt", { session: false }), order
 
 // @route POST /order/orderItem/:id
 // @desc Add an order item to an order
-router.post("/order/orderItem/:id", passport.authenticate("jwt", { session: false }), orderController.addOrderItem);
+router.post("/order/orderItem/", passport.authenticate("jwt", { session: false }), orderController.addOrderItem);
 
 // @route DELETE /order/orderItem
 // @desc Remove an order item from an order

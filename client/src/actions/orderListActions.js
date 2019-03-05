@@ -45,7 +45,7 @@ export const resetActiveOrder = () => dispatch => {
 
 export const addItemToOrder = order => dispatch => {
   axios
-    .post("/order/orderItem/:id", order)
+    .post("/order/orderItem", order)
     .then(res => {
       dispatch({
         type: ADD_ITEM_TO_ORDER,
