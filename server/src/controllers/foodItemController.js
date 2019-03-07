@@ -3,7 +3,6 @@ const validateFoodItemInput = require("../validations/foodItemValidation");
 
 exports.createFoodItem = (req, res) => {
   const { errors, isValid } = validateFoodItemInput(req.body);
-
   //Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -12,7 +11,7 @@ exports.createFoodItem = (req, res) => {
   const newFoodItem = new FoodItem({
     name: req.body.name,
     unitPrice: req.body.unitPrice,
-    menuId: req.body.menuId,
+    menu: req.body.menu,
     category: req.body.category
   });
 

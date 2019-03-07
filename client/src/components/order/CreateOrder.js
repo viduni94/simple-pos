@@ -124,12 +124,12 @@ export class CreateOrder extends Component {
       customerId: this.state.customerId,
       orderItems: this.state.orderItems
     };
-    console.log(orderData);
     axios
       .post("/order", orderData)
       .then(res => {
         this.setState({ successMessage: true, customerId: "", customerName: "", orderItems: [], itemCount: "", status: "", items: [] });
         localStorage.removeItem("activeCustomer");
+        console.log(res.data);
         return res.data;
       })
       .catch(err => {

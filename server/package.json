@@ -4,7 +4,8 @@
   "description": "Mini project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-nyc": "nyc mocha",
+    "test": "mocha 'test/apiTest.js' --timeout 15000",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ../client",
@@ -21,22 +22,30 @@
   },
   "homepage": "https://github.com/viduni94/simple-pos#readme",
   "devDependencies": {
-    "jest": "^24.1.0",
-    "nodemon": "^1.18.10"
+    "chai": "^4.2.0",
+    "jest": "23.6.0",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
+    "nyc": "^13.3.0",
+    "should": "^13.2.3",
+    "sinon": "^7.2.7",
+    "supertest": "^3.4.2",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.10.1"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "http": "0.0.0",
     "jsonwebtoken": "^8.4.0",
+    "mocha": "^6.0.2",
     "mongoose": "^5.4.13",
-    "morgan": "ls^1.9.1",
     "mysql": "^2.16.0",
     "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
     "validator": "^10.11.0"
   }
 }

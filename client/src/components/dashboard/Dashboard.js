@@ -21,7 +21,7 @@ class Dashboard extends Component {
       });
       if (singleOrder.length > 0) {
         return singleOrder[0].orderItems.reduce((acc, currValue) => {
-          return acc + currValue.foodItem.unitPrice;
+          return acc + currValue.foodItem.unitPrice * currValue.itemCount;
         }, 0);
       }
     }

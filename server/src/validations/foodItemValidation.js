@@ -8,7 +8,7 @@ module.exports = function validateFoodItemInput(data) {
   data.name = !isEmpty(data.name) ? data.name : "";
   data.unitPrice = !isEmpty(data.unitPrice) ? data.unitPrice : "";
 
-  if (!mongoose.Types.ObjectId.isValid(data.menuId)) {
+  if (!mongoose.Types.ObjectId.isValid(data.menu)) {
     errors.menuId = "Invalid menu ID";
   }
 

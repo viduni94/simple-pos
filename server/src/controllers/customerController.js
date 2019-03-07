@@ -4,6 +4,8 @@ const validateCustomerInput = require("../validations/customerValidation");
 exports.createCustomer = (req, res) => {
   const { errors, isValid } = validateCustomerInput(req.body);
 
+  console.log(errors, isValid);
+
   //Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
@@ -28,5 +30,5 @@ exports.createCustomer = (req, res) => {
           .catch(err => console.log(err));
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => res.status(404).json(err));
 };

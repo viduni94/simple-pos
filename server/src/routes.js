@@ -10,9 +10,6 @@ const customerController = require("./controllers/customerController");
 const menuController = require("./controllers/menuController");
 const foodItemController = require("./controllers/foodItemController");
 
-//Main route
-router.get("/", (req, res) => res.send("Simple POS"));
-
 // @route POST /user
 // @desc Register a new user
 router.post("/user", userController.createUser);
@@ -20,10 +17,6 @@ router.post("/user", userController.createUser);
 // @route POST /login
 // @desc Validate a user and login to the system / Returns JWT token
 router.post("/login", loginController.validateUser);
-
-// @route GET /profile
-// @desc Get current user
-router.get("/profile", passport.authenticate("jwt", { session: false }), userController.getUserProfile);
 
 // @route GET /order
 // @desc Get all open orders
@@ -35,7 +28,7 @@ router.post("/order", passport.authenticate("jwt", { session: false }), orderCon
 
 // @route GET /order/:id
 // @desc Get an order by id
-router.get("/order/:id", passport.authenticate("jwt", { session: false }), orderController.getOrder);
+// router.get("/order/:id", passport.authenticate("jwt", { session: false }), orderController.getOrder);
 
 // @route PUT /order/:id
 // @desc Update order status by id
