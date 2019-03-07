@@ -1,7 +1,6 @@
 "use strict";
 
-var test = require("tape");
+const apiTest = require("./apiTest");
 
-test("First test!", function(t) {
-  t.end();
-});
+
+console.log("Running test index");

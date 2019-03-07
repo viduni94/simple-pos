@@ -1,6 +1,5 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
-const User = require("../models/UserModel");
 const mongoose = require("mongoose");
 
 module.exports = function validateCustomerInput(data) {

@@ -4,8 +4,7 @@
   "description": "Mini project",
   "main": "index.js",
   "scripts": {
-    "test-nyc": "nyc mocha",
-    "test": "nyc mocha 'test/apiTest.js' --timeout 15000 --exit",
+    "test": "nyc mocha 'test' --timeout 15000 --exit",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ../client",

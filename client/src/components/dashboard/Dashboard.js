@@ -81,20 +81,18 @@ class Dashboard extends Component {
     }
 
     return (
-      <>
-        <div className="dashboard">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="row">
-                  <h3 className="custom-title">- Open Orders of {user.fname} -</h3>
-                </div>
-                <div className="row">{dashboardContent}</div>
+      <div className="dashboard">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="row">
+                <h3 className="custom-title">- Open Orders of {user.fname} -</h3>
               </div>
+              <div className="row">{dashboardContent}</div>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
