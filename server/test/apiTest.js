@@ -315,4 +315,4 @@ describe("POST /menu", function(done) {
       });
   });
 });
-process.exit(1);
+// process.exit(1);

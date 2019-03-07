@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test-nyc": "nyc mocha",
-    "test": "mocha 'test/apiTest.js' --timeout 15000",
+    "test": "nyc mocha 'test/apiTest.js' --timeout 15000 --exit",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ../client",
