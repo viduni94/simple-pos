@@ -6,6 +6,7 @@
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "cors": "^2.8.5",
+    "expect": "^24.1.0",
     "history": "^4.7.2",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
@@ -40,7 +41,7 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^23.6.0",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^8.0.5",
     "babel-plugin-syntax-class-properties": "^6.13.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
@@ -50,7 +51,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "jest": "^23.6.0",
-    "webpack": "^4.29.6",
+    "webpack": "^4.28.3",
     "webpack-cli": "^3.2.3"
   }
 }
