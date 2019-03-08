@@ -8,7 +8,7 @@ import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS, SET_ACTIVE_ORDER, RESET_A
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe("customer actions", () => {
+describe("order list actions", () => {
   beforeEach(function() {
     moxios.install();
   });
