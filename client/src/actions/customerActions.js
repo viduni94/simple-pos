@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Add new customer
 export const addCustomer = customerData => dispatch => {
-  axios
+  return axios
     .post("/customer", customerData)
     .then(res => {
       localStorage.setItem("activeCustomer", JSON.stringify(res.data));
@@ -12,7 +12,7 @@ export const addCustomer = customerData => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err
+        payload: err.response.data
       })
     );
 };
