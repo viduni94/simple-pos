@@ -3,10 +3,12 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { decode } from "punycode";
 
 //Login user - Get user token
 export const loginUser = userData => dispatch => {
-  axios
+  console.log(userData);
+  return axios
     .post("/login", userData)
     .then(res => {
       // Save to localStorage
@@ -18,19 +20,21 @@ export const loginUser = userData => dispatch => {
       // Decode token to get the user data
       const decoded = jwt_decode(token);
       // Set current user
-      dispatch(setCurrentUser(decoded));
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: decoded
+      });
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 // Set logged in user
 export const setCurrentUser = decoded => {
-  console.log(decoded);
   return {
     type: SET_CURRENT_USER,
     payload: decoded
@@ -44,5 +48,5 @@ export const logoutUser = () => dispatch => {
   //Remove auth header
   setAuthToken(false);
   //Set the current user to {}
-  dispatch(setCurrentUser({}));
+  return dispatch(setCurrentUser({}));
 };
