@@ -7,7 +7,7 @@ import { GET_ORDERLIST, ORDERLIST_LOADING, GET_ERRORS, SET_ACTIVE_ORDER, RESET_A
 export const getOpenOrderList = () => dispatch => {
   dispatch(setOrderListLoading());
 
-  axios
+  return axios
     .get("/order")
     .then(res =>
       dispatch({
@@ -18,7 +18,7 @@ export const getOpenOrderList = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err
+        payload: err.response.data
       })
     );
 };
@@ -45,7 +45,7 @@ export const resetActiveOrder = () => dispatch => {
 };
 
 export const addItemToOrder = order => dispatch => {
-  axios
+  return axios
     .post("/order/orderItem", order)
     .then(res => {
       dispatch({
@@ -56,13 +56,13 @@ export const addItemToOrder = order => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err
+        payload: err.response.data
       })
     );
 };
 
 export const deleteItemFromOrder = (orderId, itemId) => dispatch => {
-  axios
+  return axios
     .delete(`/order/orderItem/${orderId}/${itemId}`)
     .then(res => {
       dispatch({
@@ -73,13 +73,13 @@ export const deleteItemFromOrder = (orderId, itemId) => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err
+        payload: err.response.data
       })
     );
 };
 
 export const checkoutOrder = orderId => dispatch => {
-  axios
+  return axios
     .put(`/order/${orderId}`)
     .then(res => {
       dispatch({
@@ -91,7 +91,7 @@ export const checkoutOrder = orderId => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err
+        payload: err.response.data
       })
     );
 };

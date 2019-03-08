@@ -4,7 +4,7 @@ import { GET_FOODITEMS, GET_ERRORS } from "./types";
 
 //Get the list of food items
 export const getFoodItems = () => dispatch => {
-  axios
+  return axios
     .get("/foodItem")
     .then(res =>
       dispatch({
@@ -15,7 +15,7 @@ export const getFoodItems = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
-        payload: err
+        payload: err.response.data
       })
     );
 };
