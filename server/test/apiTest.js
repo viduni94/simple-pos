@@ -66,6 +66,26 @@ describe("POST /order", function(done) {
         done();
       });
   });
+
+  it("respond with 400 on validation error", function(done) {
+    request(app)
+      .post("/order")
+      .send({
+        id: "5c6e3ef41b5ce04615a0b482",
+        status: true,
+        userId: "1",
+        customerId: "2",
+        createdDate: "1551861256873"
+      })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
 });
 
 // Testing update an order status by id API endpoint
@@ -223,6 +243,24 @@ describe("POST /foodItem", function(done) {
         done();
       });
   });
+
+  it("respond with 400 when input is not valid", function(done) {
+    request(app)
+      .post("/foodItem")
+      .send({
+        menu: "1",
+        category: "beverages",
+        createdDate: "1551861256873"
+      })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
 });
 
 // Testing get all food items API endpoint
@@ -263,21 +301,88 @@ describe("POST /customer", function(done) {
   let id = mongoose.Types.ObjectId("5c6902f5eb2d6a2c8b79c9e9");
   let mobile = Math.floor(Math.random() * 10000000000).toString();
 
-  let customerData = {
-    fname: "test",
-    lname: "testtest",
-    userId: id,
-    mobile: mobile
-  };
-
   it("respond with 200 created", function(done) {
     request(app)
       .post("/customer")
-      .send(customerData)
+      .send({
+        fname: "test",
+        lname: "testtest",
+        userId: id,
+        mobile: mobile
+      })
       .set("Accept", "application/json")
       .set("Authorization", token)
       .expect("Content-Type", /json/)
       .expect(200)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
+  it("respond with 400", function(done) {
+    request(app)
+      .post("/customer")
+      .send({
+        fname: "test",
+        lname: "testtest",
+        userId: id,
+        mobile: "0777774444"
+      })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it("respond with 400", function(done) {
+    request(app)
+      .post("/customer")
+      .send({
+        fname: "test",
+        lname: "testtest",
+        mobile: "0777774444"
+      })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it("respond with 400", function(done) {
+    request(app)
+      .post("/customer")
+      .send({
+        fname: "t",
+        lname: "testtest"
+      })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it("respond with 400", function(done) {
+    request(app)
+      .post("/customer")
+      .send({
+        lname: "testtest"
+      })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
       .end(err => {
         if (err) return done(err);
         done();
@@ -314,5 +419,139 @@ describe("POST /menu", function(done) {
         done();
       });
   });
+
+  it("respond with 400 on invalid name", function(done) {
+    request(app)
+      .post("/menu")
+      .send({})
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
 });
-// process.exit(1);
+
+// Testing login API endpoint
+describe("POST /login", function(done) {
+  it("respond with 400 on login data validation error", function(done) {
+    let token = null;
+    request(app)
+      .post("/login")
+      .send({ email: "www", password: "123" })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(function(err, res) {
+        token = res.body.token;
+        done();
+      });
+  });
+
+  it("respond with 404 on user not found", function(done) {
+    let token = null;
+    request(app)
+      .post("/login")
+      .send({ email: "abc@gmail.com", password: "123" })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(404)
+      .end(function(err, res) {
+        token = res.body.token;
+        done();
+      });
+  });
+
+  it("respond with 400 on password incorrect", function(done) {
+    let token = null;
+    request(app)
+      .post("/login")
+      .send({ email: "viduni.ushanka@gmail.com", password: "1" })
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(function(err, res) {
+        token = res.body.token;
+        done();
+      });
+  });
+
+  it("respond with 400 on invalid login input", function(done) {
+    let token = null;
+    request(app)
+      .post("/login")
+      .send({})
+      .set("Accept", "application/json")
+      .set("Authorization", token)
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(function(err, res) {
+        token = res.body.token;
+        done();
+      });
+  });
+});
+
+// Testing user API endpoint
+describe("POST /user", function(done) {
+  const randomString = Math.random()
+    .toString(36)
+    .substr(2, 5);
+  it("respond with 200 created", function(done) {
+    request(app)
+      .post("/user")
+      .send({ fname: "test", lname: "test", email: `${randomString}@gmail.com`, password: "1" })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .end(function(err, res) {
+        token = res.body.token;
+        done();
+      });
+  });
+
+  it("respond with 400 on login data validation error", function(done) {
+    request(app)
+      .post("/user")
+      .send({ email: "www", password: "123" })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it("respond with 400 on existing email", function(done) {
+    request(app)
+      .post("/user")
+      .send({ fname: "test", lname: "test", email: "viduni.ushanka@gmail.com", password: "1" })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
+
+  it("respond with 400 on validation errors", function(done) {
+    request(app)
+      .post("/user")
+      .send({ fname: "test", lname: "test" })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .expect(400)
+      .end(err => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});

@@ -26,7 +26,7 @@ exports.getFoodItems = (req, res) => {
     if (!err) {
       res.json(foodItems);
     } else {
-      console.log(err);
+      // console.log(err);
     }
   });
 };
