@@ -1,6 +1,7 @@
 // jest.config.js
 module.exports = {
-  verbose: true,
+  // verbose: true,
+  bail: false,
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{js}"],

@@ -7,7 +7,6 @@ import { decode } from "punycode";
 
 //Login user - Get user token
 export const loginUser = userData => dispatch => {
-  console.log(userData);
   return axios
     .post("/login", userData)
     .then(res => {

@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Component should render initial layout 1`] = `
+Array [
+  <div
+    className="login"
+  >
+    <div
+      className="dark-overlay login-inner text-light"
+    >
+      <div
+        className="container"
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="col-md-12 text-center"
+          >
+            <img
+              alt="logo"
+              className="img-responsive"
+              src="test-file-stub"
+              style={
+                Object {
+                  "height": 350,
+                  "position": "relative",
+                  "width": 350,
+                }
+              }
+            />
+            <div
+              className="login-form"
+            >
+              <div
+                className="row"
+              >
+                <div
+                  className="col-md-6 m-auto"
+                >
+                  <form
+                    noValidate={true}
+                    onSubmit={[Function]}
+                  >
+                    <div
+                      className="form-group"
+                    >
+                      <input
+                        className="form-control form-control-lg"
+                        name="email"
+                        onChange={[Function]}
+                        placeholder="Email Address"
+                        type="email"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      className="form-group"
+                    >
+                      <input
+                        className="form-control form-control-lg"
+                        name="password"
+                        onChange={[Function]}
+                        placeholder="Password"
+                        type="password"
+                        value=""
+                      />
+                    </div>
+                    <button
+                      className="btn btn-login btn-block mt-4"
+                      type="submit"
+                    >
+                      Login
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
