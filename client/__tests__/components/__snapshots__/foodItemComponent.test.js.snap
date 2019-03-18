@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FoodItem Component should render initial layout 1`] = `
+Array [
+  <div
+    className="col-md-6"
+  >
+    <ul
+      className="mu-menu-item-nav"
+    >
+      <li>
+        <div
+          className="media"
+        >
+          <div
+            className="media-left"
+          >
+            <img
+              alt="img"
+              className="media-object"
+              src="../../img/menu/abc.jpg"
+            />
+          </div>
+          <div
+            className="media-body"
+          >
+            <h4
+              className="media-heading"
+            >
+              <span>
+                abc
+              </span>
+            </h4>
+            <span
+              className="mu-menu-price"
+            >
+              5.00
+               LKR
+            </span>
+            <p>
+              1
+            </p>
+            <p>
+              <button
+                className="btn btn-normal btn-sm"
+                onClick={[Function]}
+                type="submit"
+              >
+                Add Item
+              </button>
+            </p>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>,
+]
+`;

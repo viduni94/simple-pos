@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-class FoodItem extends Component {
+export class FoodItem extends Component {
   selectedItem = (itemId, itemName, itemPrice) => {
     let item = {
       foodItem: itemId,

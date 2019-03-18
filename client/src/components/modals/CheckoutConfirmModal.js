@@ -5,7 +5,7 @@ import { checkoutOrder } from "../../actions/orderListActions";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-class CheckoutConfirmModal extends Component {
+export class CheckoutConfirmModal extends Component {
   constructor(props) {
     super(props);
 

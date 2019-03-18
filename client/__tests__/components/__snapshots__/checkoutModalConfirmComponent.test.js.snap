@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checout modal Component should render initial layout 1`] = `
+Array [
+  <div>
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen=""
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      role="dialog"
+      toggle=""
+      zIndex={1050}
+    >
+      <ModalHeader
+        charCode={215}
+        closeAriaLabel="Close"
+        tag="h5"
+        toggle=""
+        wrapTag="div"
+      >
+        Checkout Confirmation
+      </ModalHeader>
+      <form
+        onSubmit={[Function]}
+      >
+        <ModalBody
+          tag="div"
+        >
+          <p>
+            Are you sure you want to checkout this order?
+          </p>
+        </ModalBody>
+        <ModalFooter
+          tag="div"
+        >
+          <Button
+            color="secondary"
+            onClick=""
+            tag="button"
+            type="reset"
+          >
+            No
+          </Button>
+          <Button
+            color="danger"
+            onClick=""
+            tag="button"
+            type="submit"
+          >
+            Yes
+          </Button>
+        </ModalFooter>
+      </form>
+    </Modal>
+  </div>,
+]
+`;

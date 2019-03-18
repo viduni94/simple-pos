@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Spinner from "../common/spinner";
 import FoodItem from "./FoodItem";
 
-class Menu extends Component {
+export class Menu extends Component {
   constructor(props) {
     super(props);
 

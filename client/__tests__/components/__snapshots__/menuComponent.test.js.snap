@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FoodItem Component should render initial layout 1`] = `
+Array [
+  <section
+    id="mu-restaurant-menu"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        >
+          <div
+            className="mu-restaurant-menu-area"
+          >
+            <div
+              className="mu-restaurant-menu-content"
+            >
+              <ul
+                className="nav nav-tabs mu-restaurant-menu"
+              >
+                <li>
+                  <a
+                    className="nav-item nav-link active"
+                    data-toggle="tab"
+                    href="#beverages"
+                  >
+                    Beverages
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="nav-item nav-link"
+                    data-toggle="tab"
+                    href="#appetizers"
+                  >
+                    Appetizers
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="nav-item nav-link"
+                    data-toggle="tab"
+                    href="#mains"
+                  >
+                    Mains
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="nav-item nav-link"
+                    data-toggle="tab"
+                    href="#desserts"
+                  >
+                    Desserts
+                  </a>
+                </li>
+              </ul>
+              <_default />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>,
+]
+`;

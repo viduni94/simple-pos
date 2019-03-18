@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { getOpenOrderList, resetActiveOrder } from "../../actions/orderListActions";
 import { setActivePage } from "../../actions/pageActions";
 
-class Dashboard extends Component {
+export class Dashboard extends Component {
   componentDidMount() {
     this.props.getOpenOrderList();
     this.props.resetActiveOrder();
@@ -25,7 +25,6 @@ class Dashboard extends Component {
         }, 0);
       }
     }
-    return 0;
   };
 
   render() {
