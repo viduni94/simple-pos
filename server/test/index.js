@@ -1,6 +1,9 @@
 "use strict";
 
-const apiTest = require("./apiTest");
-// const customerControllerTest = require("./customerController.test");
+const orderApiTest = require("./orderApi.test");
+const foodItemApiTest = require("./fooditemApi.test");
+const customerApiTest = require("./customerApi.test");
+const menuApiTest = require("./menuApi.test");
+const loginApiTest = require("./loginApi.test");
+const userApiTest = require("./userApi.test");
 
-console.log("Running test index");
