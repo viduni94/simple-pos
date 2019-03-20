@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import classnames from "classnames";
+import Select from "react-select";
+import { getAllCustomers, setActiveCustomer } from "../../actions/customerActions";
+import { withRouter } from "react-router-dom";
 
 class FindCustomerModal extends React.Component {
   constructor(props) {
@@ -10,10 +12,10 @@ class FindCustomerModal extends React.Component {
 
     this.state = {
       mobile: "",
-      errors: {}
+      errors: {},
+      customerId: ""
     };
 
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.toggleModalClose = this.toggleModalClose.bind(this);
   }
@@ -24,36 +26,66 @@ class FindCustomerModal extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+
+    const activeCustomer = this.props.customer.customers.filter(cus => cus._id === this.state.customerId);
+    localStorage.setItem("activeCustomer", JSON.stringify(activeCustomer[0]));
+    this.props.setActiveCustomer(activeCustomer[0]);
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  componentDidMount() {
+    this.props.getAllCustomers();
   }
 
   render() {
+    const { customers } = this.props.customer;
+
+    const mobileNumbers = [];
+
+    customers.map(customer => {
+      const obj = {
+        label: customer.mobile,
+        value: customer._id
+      };
+      mobileNumbers.push(obj);
+    });
+    
     return (
       <div>
         <Modal isOpen={this.props.toggle.modal} toggle={this.props.toggle.toggle} backdrop={this.props.toggle.backdrop}>
           <ModalHeader toggle={this.props.toggle.toggle}>Find Customer</ModalHeader>
-          <ModalBody>
-            <div className="form-group">
-              <input type="text" className={classnames("form-control form-control-lg")} name="mobile" value={this.state.mobile} onChange={this.onChange} required />
-              <small className="form-text text-muted">Select customer from mobile</small>
-              {/* {errors.fname && <div className="invalid-feedback">{errors.fname}</div>} */}
-            </div>
-          </ModalBody>
-          <ModalFooter>
-            <Button type="reset" onClose={this.toggleModalClose} color="secondary" onClick={this.props.toggle.toggle}>
-              Cancel
-            </Button>
-            <Button type="submit" color="success" onClick={this.props.toggle.toggle}>
-              Select Customer
-            </Button>
-          </ModalFooter>
+          <form onSubmit={this.onSubmit}>
+            <ModalBody>
+              <div className="form-group">
+                <Select name="mobile" options={mobileNumbers} onChange={opt => this.setState({ customerId: opt.value })} required />
+                <small className="form-text text-muted">Select customer from mobile</small>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button type="reset" onClose={this.toggleModalClose} color="secondary" onClick={this.props.toggle.toggle}>
+                Cancel
+              </Button>
+              <Button type="submit" color="success" onClick={this.props.toggle.toggle}>
+                Select Customer
+              </Button>
+            </ModalFooter>
+          </form>
         </Modal>
       </div>
     );
   }
 }
 
-export default connect(null)(FindCustomerModal);
+FindCustomerModal.propTypes = {
+  customer: PropTypes.object.isRequired,
+  getAllCustomers: PropTypes.func.isRequired,
+  setActiveCustomer: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  customer: state.customer
+});
+
+export default connect(
+  mapStateToProps,
+  { getAllCustomers, setActiveCustomer }
+)(withRouter(FindCustomerModal));

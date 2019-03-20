@@ -129,7 +129,6 @@ export class CreateOrder extends Component {
       .then(res => {
         this.setState({ successMessage: true, customerId: "", customerName: "", orderItems: [], itemCount: "", status: "", items: [] });
         localStorage.removeItem("activeCustomer");
-        console.log(res.data);
         return res.data;
       })
       .catch(err => {
@@ -185,16 +184,16 @@ export class CreateOrder extends Component {
             <div className="col-md-7 ml-3">
               <Menu callbackFromParent={this.getOrderItems} />
             </div>
-            <div className="col-md-4 ml-5">
+            <div className="col-md-4 ml-3">
               <h2 className="text-center mu-title">Create New Order</h2>
               <div className="row col-md-12">
                 <div className="col-md-6">
-                  <button className="btn btn-normal btn-block mr-4 mt-4 mb-4" onClick={this.toggle1}>
+                  <button className="btn btn-normal btn-block mt-4 mb-4" onClick={this.toggle1}>
                     Add New Customer
                   </button>
                 </div>
                 <div className="col-md-6">
-                  <button className="btn btn-normal btn-block ml-4 mt-4 mb-4" onClick={this.toggle2}>
+                  <button className="btn btn-normal btn-block mt-4 mb-4" onClick={this.toggle2}>
                     Find Existing Customer
                   </button>
                 </div>
@@ -241,14 +240,14 @@ export class CreateOrder extends Component {
                     </tbody>
                   </table>
                 </div>
-                <div className="row col-md-12">
+                <div className="row">
                   <div className="col-md-6">
-                    <Link to="/dashboard" className="btn btn-secondary btn-block mr-4">
+                    <Link to="/dashboard" className="btn btn-secondary btn-block">
                       Cancel
                     </Link>
                   </div>
                   <div className="col-md-6">
-                    <button type="submit" className="btn btn-normal btn-block ml-4">
+                    <button type="submit" className="btn btn-normal btn-block">
                       Submit Order
                     </button>
                   </div>

@@ -258,19 +258,28 @@ img {
   }
 }
 
+.custom-table {
+  overflow-x: auto;
+  overflow-y: auto;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+}
+
+.custom-table-1 {
+  overflow-y: auto;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
 @media only screen and (min-width: 600px) {
   .custom-table {
     height: 53vh;
-    border: 1px solid lightgray;
-    border-radius: 4px;
   }
 }
 
 @media only screen and (min-width: 600px) {
   .custom-table-1 {
     height: 33vh;
-    overflow-y: auto;
-    border: 1px solid lightgray;
-    border-radius: 4px;
   }
 }

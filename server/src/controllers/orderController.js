@@ -37,20 +37,6 @@ exports.getAllOpenOrders = (req, res) => {
     });
 };
 
-//Get a single order by id
-// exports.getOrder = (req, res) => {
-//   console.log(req.params.id);
-//   Order.findOne({ _id: req.params.id })
-//     .populate("customer")
-//     .exec((err, order) => {
-//       if (!err) {
-//         res.json(order);
-//       } else {
-//         console.log(err);
-//       }
-//     });
-// };
-
 exports.addOrderItem = (req, res) => {
   Order.findOne({ _id: req.body.orderId })
     .then(order => {

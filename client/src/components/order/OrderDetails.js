@@ -116,15 +116,15 @@ class OrderDetails extends Component {
                 <table className="table">
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Item</th>
-                      <th scope="col" className="text-center">
+                      <th>#</th>
+                      <th>Item</th>
+                      <th className="text-center">
                         Quantity
                       </th>
-                      <th scope="col" className=" text-center">
+                      <th className=" text-center">
                         Price (LKR)
                       </th>
-                      <th scope="col" className=" text-center">
+                      <th className=" text-center">
                         Action
                       </th>
                     </tr>
@@ -145,14 +145,14 @@ class OrderDetails extends Component {
                   </tbody>
                 </table>
               </div>
-              <div className="row col-md-12">
-                <div className="col-md-6">
-                  <Link to={"/dashboard"} className="btn btn-secondary btn-block mr-4">
+              <div className="row">
+                <div className="col-md-6 col-sm-6 col-xs-6">
+                  <Link to={"/dashboard"} className="btn btn-secondary btn-block">
                     Go Back
                   </Link>
                 </div>
                 <div className="col-md-6">
-                  <button className="btn btn-normal btn-block ml-4" onClick={this.toggle}>
+                  <button className="btn btn-normal btn-block" onClick={this.toggle}>
                     Checkout
                   </button>
                 </div>
@@ -170,10 +170,10 @@ class OrderDetails extends Component {
         <div>
           <div className="create-order">
             <div className="row custom-row">
-              <div className="col-md-7 ml-3">
+              <div className="col-md-7 col-sm-12 col-xs-12 ml-3">
                 <Menu callbackFromParent={this.getOrderItems} />
               </div>
-              <div className="col-md-4 ml-5">
+              <div className="col-md-4 col-sm-12 ml-2">
                 <h2 className="text-center mu-title">Details of Order No:</h2>
                 <h5 className="text-center"> {activeOrder}</h5>
                 {activeOrderContent}

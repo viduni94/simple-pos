@@ -1,8 +1,9 @@
-import { SET_ACTIVE_CUSTOMER, RESET_ACTIVE_CUSTOMER } from "../actions/types";
+import { SET_ACTIVE_CUSTOMER, RESET_ACTIVE_CUSTOMER, GET_CUSTOMERS } from "../actions/types";
 
 const initialState = {
   customer: null,
-  activeCustomer: null
+  activeCustomer: null,
+  customers: []
 };
 
 export default function(state = initialState, action) {
@@ -18,6 +19,11 @@ export default function(state = initialState, action) {
         ...state,
         activeCustomer: null,
         customer: null
+      };
+      case GET_CUSTOMERS:
+      return {
+        ...state,
+        customers: action.payload
       };
     default:
       return state;

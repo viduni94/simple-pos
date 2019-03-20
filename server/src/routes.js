@@ -54,6 +54,10 @@ router.get("/foodItem", passport.authenticate("jwt", { session: false }), foodIt
 // @desc Create a customer
 router.post("/customer", passport.authenticate("jwt", { session: false }), customerController.createCustomer);
 
+// @route GET /customers
+// @desc Get all customers
+router.get("/customers", passport.authenticate("jwt", { session: false }), customerController.getCustomers);
+
 // @route POST /menu
 // @desc Create a menu
 router.post("/menu", passport.authenticate("jwt", { session: false }), menuController.createMenu);
