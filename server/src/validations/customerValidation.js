@@ -7,7 +7,6 @@ module.exports = function validateCustomerInput(data) {
 
   data.fname = !isEmpty(data.fname) ? data.fname : "";
   data.mobile = !isEmpty(data.mobile) ? data.mobile : "";
-  data.lname = !isEmpty(data.lname) ? data.lname : "";
   data.userId = !isEmpty(data.userId) ? data.userId : "";
 
   if (!mongoose.Types.ObjectId.isValid(data.userId)) {

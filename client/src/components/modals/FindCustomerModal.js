@@ -39,16 +39,16 @@ class FindCustomerModal extends React.Component {
   render() {
     const { customers } = this.props.customer;
 
-    const mobileNumbers = [];
+    const mobileNumbers = []; 
 
     customers.map(customer => {
       const obj = {
         label: customer.mobile,
         value: customer._id
       };
-      mobileNumbers.push(obj);
+      return mobileNumbers.push(obj);
     });
-    
+
     return (
       <div>
         <Modal isOpen={this.props.toggle.modal} toggle={this.props.toggle.toggle} backdrop={this.props.toggle.backdrop}>

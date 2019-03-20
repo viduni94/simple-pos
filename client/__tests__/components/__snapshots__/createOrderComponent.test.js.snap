@@ -17,7 +17,7 @@ Array [
           />
         </div>
         <div
-          className="col-md-4 ml-5"
+          className="col-md-4 ml-3"
         >
           <h2
             className="text-center mu-title"
@@ -31,7 +31,7 @@ Array [
               className="col-md-6"
             >
               <button
-                className="btn btn-normal btn-block mr-4 mt-4 mb-4"
+                className="btn btn-normal btn-block mt-4 mb-4"
                 onClick={[Function]}
               >
                 Add New Customer
@@ -41,7 +41,7 @@ Array [
               className="col-md-6"
             >
               <button
-                className="btn btn-normal btn-block ml-4 mt-4 mb-4"
+                className="btn btn-normal btn-block mt-4 mb-4"
                 onClick={[Function]}
               >
                 Find Existing Customer
@@ -135,7 +135,7 @@ Array [
                 readOnly={true}
                 required={true}
                 type="text"
-                value="2019-03-14"
+                value="2019-03-20"
               />
               <small
                 className="form-text text-muted"
@@ -202,13 +202,13 @@ Array [
               </table>
             </div>
             <div
-              className="row col-md-12"
+              className="row"
             >
               <div
                 className="col-md-6"
               >
                 <Link
-                  className="btn btn-secondary btn-block mr-4"
+                  className="btn btn-secondary btn-block"
                   replace={false}
                   to="/dashboard"
                 >
@@ -219,7 +219,7 @@ Array [
                 className="col-md-6"
               >
                 <button
-                  className="btn btn-normal btn-block ml-4"
+                  className="btn btn-normal btn-block"
                   type="submit"
                 >
                   Submit Order
@@ -239,7 +239,7 @@ Array [
         }
       }
     />
-    <Connect(FindCustomerModal)
+    <Connect(withRouter(FindCustomerModal))
       toggle={
         Object {
           "backdrop": true,

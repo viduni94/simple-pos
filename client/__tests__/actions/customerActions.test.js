@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import moxios from "moxios";
 import expect from "expect";
 import * as customerActions from "../../src/actions/customerActions";
-import { GET_ERRORS, SET_ACTIVE_CUSTOMER, RESET_ACTIVE_CUSTOMER } from "../../src/actions/types";
+import { GET_ERRORS, SET_ACTIVE_CUSTOMER, RESET_ACTIVE_CUSTOMER, GET_CUSTOMERS } from "../../src/actions/types";
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -66,5 +66,42 @@ describe("customer actions", () => {
     store.dispatch(customerActions.resetActiveCustomer());
     // return of async actions
     expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it("creates GET_CUSTOMERS and returns all customers", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 200,
+        response: [{ _id: "1", fname: "test", lname: "test", user: "2", mobile: "0771111111" }]
+      });
+    });
+    const expectedActions = [{ type: GET_CUSTOMERS, payload: [{ _id: "1", fname: "test", lname: "test", user: "2", mobile: "0771111111" }] }];
+
+    const store = mockStore({ customer: {} });
+
+    return store.dispatch(customerActions.getAllCustomers()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it("creates GET_ERRORS", () => {
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 400,
+        response: { error: "An error occurred" }
+      });
+    });
+
+    const expectedActions = [{ type: GET_ERRORS, payload: { error: "An error occurred" } }];
+
+    const store = mockStore({ customer: {} });
+
+    return store.dispatch(customerActions.getAllCustomers()).then(() => {
+      // return of async actions
+      expect(store.getActions()).toEqual(expectedActions);
+    });
   });
 });

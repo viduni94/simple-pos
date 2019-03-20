@@ -6,7 +6,6 @@ exports.createCustomer = (req, res) => {
 
   //Check Validation
   if (!isValid) {
-    // return res.status(400).json(errors);
     return res.status(400).json(errors);
   }
 
@@ -26,7 +25,7 @@ exports.createCustomer = (req, res) => {
         newCustomer
           .save()
           .then(customer => res.json(customer))
-          // .catch(err => console.log(err));
+          .catch(err => console.log(err));
       }
     })
 };
@@ -38,7 +37,7 @@ exports.getCustomers = (req, res) => {
       if (!err) {
         res.json(customers);
       } else {
-        console.log(err);
+        res.json(errors);
       }
     });
 }

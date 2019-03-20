@@ -18,7 +18,6 @@ exports.validateUser = (req, res) => {
   //Find the user by email
   User.findOne({ email })
     .then(user => {
-      console.log("inside controller");
       //Check for user
       if (!user) {
         errors.email = "User not found!";
