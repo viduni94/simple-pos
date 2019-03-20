@@ -2,3 +2,4 @@ npm-debug.log
 server/node_modules/*
 .vscode
 .idea/*
+server/config/keys_dev.js

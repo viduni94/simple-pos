@@ -1,5 +1,5 @@
-module.exports = {
-  mongoURI: "mongodb://viduni94:abc123@ds337985.mlab.com:37985/possystem",
-  localMongoURI: "mongodb://localhost:27017/TEST_DB",
-  secret: "thisisasecret"
-};
+if(process.env.NODE_ENV === 'production') {
+  module.exports = require('./keys_prod');
+} else {
+  module.exports = require('./keys_dev');
+}
