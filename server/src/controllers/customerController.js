@@ -33,7 +33,6 @@ exports.createCustomer = (req, res) => {
 exports.getCustomers = (req, res) => {
   Customer.find()
     .exec((err, customers) => {
-      console.log(err, customers);
       if (!err) {
         res.json(customers);
       } else {
