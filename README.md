@@ -2,6 +2,8 @@
 
 Simple-POS is a Point-of-Sales system that could be used in a restaurant.
 
+#### URL : [https://simple-pos.herokuapp.com/](https://simple-pos.herokuapp.com/)
+
 ## Installation
 
 ```bash
