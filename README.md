@@ -12,6 +12,12 @@ cd simple-pos/server
 npm run simple-pos
 ```
 
+## Credentials to login
+
+> email: **test@gmail.com** \
+> password: **123**
+
+
 ## Usage and Features
 
 * Reach the system using a web browser
