@@ -4,6 +4,11 @@ Simple-POS is a Point-of-Sales system that could be used in a restaurant.
 
 #### URL : [https://simple-pos.herokuapp.com/](https://simple-pos.herokuapp.com/)
 
+## Credentials to login
+
+> email: **test@gmail.com** \
+> password: **123**
+
 ## Installation
 
 ```bash
@@ -11,12 +16,6 @@ git clone https://github.com/viduni94/simple-pos.git
 cd simple-pos/server
 npm run simple-pos
 ```
-
-## Credentials to login
-
-> email: **test@gmail.com** \
-> password: **123**
-
 
 ## Usage and Features
 
